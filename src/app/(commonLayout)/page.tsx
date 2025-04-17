@@ -2,7 +2,7 @@ import React from 'react'
 
 const HomePage = () => {
   return (
-    <div>Home Page for common layout</div>
+    <div className='text-tertiary bg-primary'>Home Page for common layout</div>
   )
 }
 

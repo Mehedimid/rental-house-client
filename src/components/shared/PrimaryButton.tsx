@@ -1,0 +1,24 @@
+import React from "react";
+
+interface PrimaryButtonProps {
+  children?: React.ReactNode;
+  customClass?: string;
+}
+
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({
+  children = "Ripple Fill",
+  customClass = "",
+}) => {
+  return (
+    <button
+      className={`relative overflow-hidden bg-primary text-white  rounded px-6 py-3 uppercase group ${customClass}`}
+    >
+      <span className="absolute inset-0 bg-secondary rounded-full scale-0 group-hover:scale-150 transition-transform duration-500 ease-in-out z-0"></span>
+      <span className="relative z-10 transition-colors duration-500 group-hover:text-white">
+        {children}
+      </span>
+    </button>
+  );
+};
+
+export default PrimaryButton;

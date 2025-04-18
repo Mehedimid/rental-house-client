@@ -1,8 +1,11 @@
+import Home from '@/components/home/Home'
 import React from 'react'
 
 const HomePage = () => {
   return (
-    <div className='text-tertiary bg-primary'>Home Page for common layout</div>
+   <>
+   <Home></Home>
+   </>
   )
 }
 

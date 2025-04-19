@@ -4,7 +4,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --sidebar-bg: #0a0a0a; /* Dark sidebar on light background */
+  --sidebar-bg: #0a0a0a;
+  --sidebar-foreground: #ededed; 
   --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -28,8 +29,9 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-    --sidebar-bg: #ffffff; /* Light sidebar on dark background */
-    --shadow-elevation: 0 4px 12px rgba(255, 255, 255, 0.1);
+    --sidebar-bg: #ffffff;
+    --sidebar-foreground: #171717; 
+    --shadow-elevation: 0 4px 12px rgba(255, 255, 255, 1);
   }
 }
 
@@ -48,7 +50,7 @@ body {
 /* Sidebar utility with reversed theme */
 .sidebar-theme {
   background: var(--sidebar-bg);
-  color: var(--foreground);
+  color: var(--sidebar-foreground);
 }
 @keyframes spin-slow {
   0% {

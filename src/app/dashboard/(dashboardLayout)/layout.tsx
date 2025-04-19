@@ -1,3 +1,4 @@
+import AdminSidebar from "@/components/dashboard/admin/AdminSidebar";
 
 const DashboardLayout = ({ children }: Readonly<{
   children: React.ReactNode;
@@ -5,16 +6,18 @@ const DashboardLayout = ({ children }: Readonly<{
   return (
 
     <div>
-      <header> {/* Common header */} </header>
-      <aside>
-        {/* Render sidebar based on role */}
-        {/* {user.role === 'admin' && <AdminSidebar />}
+      <div className="flex">
+        <aside>
+          {/* Render sidebar based on role */}
+          {/* {user.role === 'admin' && <AdminSidebar />}
         {user.role === 'tenant' && <TenantSidebar />}
         {user.role === 'landlord' && <LandlordSidebar />} */}
-      </aside>
-      <main>
-        {children}
-      </main>
+          <AdminSidebar />
+        </aside>
+        <main>
+          {children}
+        </main>
+      </div>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import PrimaryButton from "@/components/shared/PrimaryButton";
+import Link from "next/link";
 
 const LoginForm = () => {
   return (
@@ -45,9 +46,9 @@ const LoginForm = () => {
           {/* Sign Up Link */}
           <div className="text-center text-sm mt-4">
             Don&apos;t have an account?{" "}
-            <a href="#" className="underline underline-offset-4 text-secondary">
+            <Link href="/register" className="underline underline-offset-4 text-secondary">
               Sign up
-            </a>
+            </Link>
           </div>
         </form>
 

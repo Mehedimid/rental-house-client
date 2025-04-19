@@ -22,7 +22,7 @@ const RegistrationForm = () => {
     <div className="flex justify-center items-center min-h-screen p-6">
       <div className="flex flex-col gap-6 w-full max-w-md p-8 border-2 border-white shadow-theme">
         <div className="text-center">
-          <h1 className="text-3xl font-bold">Create an Account</h1>
+          <h1 className="text-3xl font-bold">Create Account</h1>
           <p className="text-secondary mt-2">Sign up to get started</p>
         </div>
 
@@ -114,7 +114,7 @@ const RegistrationForm = () => {
           {/* Login Link */}
           <div className="text-center text-sm mt-4">
             Already have an account?{" "}
-            <Link href="#" className="underline underline-offset-4 text-secondary">
+            <Link href="/login" className="underline underline-offset-4 text-secondary">
               Login
             </Link>
           </div>

@@ -2,10 +2,18 @@
 
 import { FaBed, FaBath, FaMapMarkerAlt, FaRulerCombined } from "react-icons/fa";
 import PrimaryButton from "../shared/PrimaryButton";
+import Link from "next/link";
+import { useState } from "react";
+
 interface PropertyCardProps {
-  imageSrc: string;
+  images: {
+    img1: string;
+    img2: string;
+    img3: string;
+    img4: string;
+    img5: string;
+  };
   forRent?: boolean;
-  forSale?: boolean;
   price: string;
   title: string;
   address: string;
@@ -15,8 +23,7 @@ interface PropertyCardProps {
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({
-  imageSrc,
-  forRent,
+  images,
   price,
   title,
   address,
@@ -24,18 +31,49 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   baths,
   sqft,
 }) => {
+  const imageList = Object.values(images);
+  const [currentImage, setCurrentImage] = useState(0);
+
+  const handleNext = () => {
+    setCurrentImage((prev) => (prev + 1) % imageList.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentImage((prev) => (prev - 1 + imageList.length) % imageList.length);
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="relative w-full aspect-w-16 aspect-h-9">
-        <img src={imageSrc} alt={title} />
-        <div className="absolute top-2 left-2">
-          {forRent && (
-            <span className="inline-block bg-secondary text-white text-xs font-semibold rounded-md px-4 py-2 mr-2">
-              For Rent
-            </span>
-          )}
-        </div>
-      </div>
+<div className="relative w-full aspect-w-16 aspect-h-9 overflow-hidden rounded-t-lg">
+  {/* Image Carousel */}
+  <img
+    src={imageList[currentImage]}
+    alt={title}
+    className="w-full h-full object-cover transition duration-300"
+  />
+
+  {/* Badge */}
+
+    <span className="absolute top-2 left-2 bg-secondary text-white text-xs font-semibold rounded-md px-4 py-2 z-10">
+      For Rent
+    </span>
+
+
+  {/* Carousel Controls */}
+  <button
+    onClick={handlePrev}
+    className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10 hover:bg-black/70"
+  >
+    ‹
+  </button>
+  <button
+    onClick={handleNext}
+    className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10 hover:bg-black/70"
+  >
+    ›
+  </button>
+</div>
+
       <div className="p-4">
         <h3 className="text-lg font-semibold text-gray-800 mb-2">{title}</h3>
         <p className="text-sm text-gray-600 mb-2">
@@ -62,9 +100,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           )}
         </div>
         <div className="mt-4">
-          <div>
+          <Link href={"/listing/id"}>
             <PrimaryButton customClass="w-full">View Details</PrimaryButton>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

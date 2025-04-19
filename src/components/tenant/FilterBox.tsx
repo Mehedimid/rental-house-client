@@ -11,7 +11,7 @@ const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
   const [keywords, setKeywords] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [city, setCity] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 1000000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
   const [sortBy, setSortBy] = useState("");
 
   const handleKeywordsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +55,7 @@ const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
 
   return (
     <div className="bg-white p-6 rounded-md shadow-md sticky top-20">
-      <h2 className="text-lg font-semibold text-gray-800 mb-4">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4">
         Filter By Features
       </h2>
 

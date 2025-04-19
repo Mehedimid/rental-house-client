@@ -2,13 +2,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import SecondaryButton from "@/components/shared/SecondaryButton";
+import Image from "next/image";
 import Link from "next/link";
-import { FaMapMarkerAlt, FaRegCheckSquare, FaRulerCombined } from "react-icons/fa";
+import {
+  FaMapMarkerAlt,
+  FaRegCheckSquare,
+  FaRulerCombined,
+} from "react-icons/fa";
 
 const PropertyDetails = () => {
-  const property =   {
+  const property = {
     images: {
-      img1: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-8.jpg",
+      img1: "https://img.freepik.com/premium-photo/building-with-balconies-that-has-word-it_991208-26685.jpg",
       img2: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-8.jpg",
       img3: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-8.jpg",
       img4: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-8.jpg",
@@ -41,7 +46,7 @@ const PropertyDetails = () => {
       garage: "available",
       yearBuilt: "01/01/19",
     },
-  }
+  };
 
   return (
     <div className="container md:w-7/8 mx-auto px-4 py-8 text-gray-800">
@@ -71,16 +76,18 @@ const PropertyDetails = () => {
       </div>
 
       {/* Main Image */}
-      <div className="relative mb-6">
-        <img
-          src={property.images.img1}
-          alt="Property"
-          className="rounded-lg w-full max-h-[500px] object-cover"
-        />
-        <span className="absolute top-4 left-4 bg-secondary text-white text-xs font-semibold px-3 py-1 rounded">
-          For Rent
-        </span>
-      </div>
+      <div className="relative w-full h-64 md:h-[400px] mb-6 rounded-lg overflow-hidden">
+  <Image
+    src={property.images.img1}
+    alt="property"
+    fill
+    className="object-cover"
+  />
+  <span className="absolute top-4 left-4 bg-secondary text-white text-xs font-semibold px-3 py-1 rounded">
+    For Rent
+  </span>
+</div>
+
 
       {/* Description */}
       <div className="mb-10">
@@ -140,18 +147,19 @@ const PropertyDetails = () => {
       </div>
 
       {/* Property Features */}
-<div className="mb-10">
-  <h3 className="text-2xl md:text-3xl font-semibold mb-4">Property Features</h3>
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-    {property.propertyFeatures.map((feature, index) => (
-      <div key={index} className="flex items-center text-gray-600">
-        <FaRegCheckSquare className="text-red-500 mr-2 text-base" />
-        <span>{feature}</span>
+      <div className="mb-10">
+        <h3 className="text-2xl md:text-3xl font-semibold mb-4">
+          Property Features
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {property.propertyFeatures.map((feature, index) => (
+            <div key={index} className="flex items-center text-gray-600">
+              <FaRegCheckSquare className="text-red-500 mr-2 text-base" />
+              <span>{feature}</span>
+            </div>
+          ))}
+        </div>
       </div>
-    ))}
-  </div>
-</div>
-
 
       {/* Floor Plan */}
       <div className="mb-10">

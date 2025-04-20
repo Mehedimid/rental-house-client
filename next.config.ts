@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       "img.freepik.com",
       "media.istockphoto.com",
       "templates.hibootstrap.com",
+
     ],
   },
 };

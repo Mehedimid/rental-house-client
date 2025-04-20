@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "img": "https://i.ibb.co/qM94XQg/plants.png",
+    "service": "WordPress Website",
+    "title": "Empower Your Business with a Custom WordPress Site"
+  },
+  {
+    "id": 2,
+    "img": "https://i.ibb.co/kqVqcMh/navvis-factory-planning2-header.webp",
+    "service": "Framer Website Design",
+    "title": "Engaging Digital Experiences with Framer Design"
+  },
+  {
+    "id": 3,
+    "img": "https://i.ibb.co/yX10rx6/warehouse.png",
+    "service": "UI/UX Design Services",
+    "title": "Innovative UI/UX Design Solutions for Your Business"
+  },
+  {
+    "id": 4,
+    "img": "https://i.ibb.co/Ns35JK9/industrial-park.jpg",
+    "service": "MERN Web Applications",
+    "title": "Bring Your Ideas to Life with Exceptional Web Application"
+  },
+  {
+    "id": 5,
+    "img": "https://i.ibb.co/P5B2K97/factories2.jpg",
+    "service": "Custom Website Development",
+    "title": "Exceptional Website Functionality for Your Users"
+  },
+  {
+    "id": 6,
+    "img": "https://i.ibb.co/q5jXBGW/cold-store.jpg",
+    "service": "Software Development",
+    "title": "Selecting the Right Software Development Agency"
+  },
+  {
+    "id": 7,
+    "img": "https://i.ibb.co/fDGbWzH/pexels-heyho-6394541.jpg",
+    "service": "Mobile App",
+    "title": "High-Performance Mobile App Development for Users"
+  },
+  {
+    "id": 8,
+    "img": "https://i.ibb.co/n7fskYp/pexels-cottonbro-4503819.jpg",
+    "service": "Shopify Store Development",
+    "title": "Gives Your Customers an Exceptional Shopping Experience"
+  },
+  {
+    "id": 9,
+    "img": "https://i.ibb.co/fDGbWzH/pexels-heyho-6394541.jpg",
+    "service": "Content Management Systems (CMS)",
+    "title": "Your Digital Content Effortlessly with Reliable CMS"
+  }
+]

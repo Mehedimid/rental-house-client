@@ -1,7 +1,9 @@
 import React from "react";
 
 interface PrimaryButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  path: string;
   customClass?: string;
+  children: React.ReactNode;
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({

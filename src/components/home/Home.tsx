@@ -1,4 +1,5 @@
 "use client";
+<<<<<<< HEAD
 import PrimaryButton from "../shared/PrimaryButton";
 import SecondaryButton from "../shared/SecondaryButton";
 import SectionHeader from "../shared/SectionHeader";
@@ -25,6 +26,19 @@ const Home = () => {
           subtitle="OUR PROPERTIES"
         ></SectionHeader>
       </div>
+=======
+import Banner from "../banner/Banner";
+import LatestHouseListing from "../latestHouseListing/LatestHouseListing";
+import Faq from "../shared/Faq";
+
+
+const Home = () => {
+  return (
+    <div>
+      <Banner/>
+     <LatestHouseListing/>
+    <Faq/>
+>>>>>>> a879d46ddb19a3e457f100f58d277e24e76ec725
     </div>
   );
 };

@@ -2,12 +2,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: [
-      "img.freepik.com",
-      "media.istockphoto.com",
-      "templates.hibootstrap.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
     ],
+    domains: ["imgbb.com","res.cloudinary.com"],
   },
+  
 };
 
 export default nextConfig;

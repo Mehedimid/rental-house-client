@@ -1,8 +1,11 @@
-import React from 'react'
+
+import RegistrationForm from '../../../components/register/RegistrationForm'
 
 const Register = () => {
   return (
-    <div>Register</div>
+    <div className='container mx-auto justify-center'>
+      <RegistrationForm/>
+    </div>
   )
 }
 

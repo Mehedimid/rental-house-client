@@ -21,13 +21,15 @@ const handler = NextAuth({
           const { accessToken, user } = res.data.data;
 
           if (accessToken && user) {
+            console.log(user.name)
             return {
               ...user,
               id: user._id,
               accessToken, 
             } as User;
           }
-
+        
+          
           return null;
         } catch (error) {
             if (axios.isAxiosError(error)) {

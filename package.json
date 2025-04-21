@@ -9,9 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.14.1",
+    "@cloudinary/url-gen": "^1.21.0",
     "aos": "^3.0.0-beta.6",
+    "axios": "^1.8.4",
+    "cloudinary": "^2.6.0",
     "lucide-react": "^0.501.0",
     "next": "15.3.0",
+    "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-fast-marquee": "^1.6.5",

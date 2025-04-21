@@ -1,13 +1,7 @@
 import React from "react";
 
 interface SecondaryButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-<<<<<<< HEAD
   customClass?: string;
-=======
-  path: string;
-  customClass?: string;
-  children: React.ReactNode;
->>>>>>> a879d46ddb19a3e457f100f58d277e24e76ec725
 }
 
 const SecondaryButton: React.FC<SecondaryButtonProps> = ({

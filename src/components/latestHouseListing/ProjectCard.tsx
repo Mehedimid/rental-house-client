@@ -1,31 +1,64 @@
-import Image from "next/image";
-import Link from "next/link";
+import { MapPin, Bath, Bed, Ruler } from "lucide-react";
+type Slide = {
+  image: string;
+  status: string;
+  price: number;
+  title: string;
+  location: string;
+  beds: number;
+  baths: number;
+  area: number;
+};
+const ProjectCard = ({ slide }: { slide: Slide })  => {
+  const {
+    image,
+    status,
+    price,
+    title,
+    location,
+    beds,
+    baths,
+    area,
+  } = slide;
 
-
-/* eslint-disable react/prop-types */
-const ProjectCard = ({ slide }) => {
-  console.log(slide.img)
   return (
-    <>
-      <div className="h-full w-full relative hover:scale-110 duration-500">
-        <Link href="/portfolio">
-          <Image src={slide.img} width={400} height={300} alt="slide image" className="slide-image" />
-          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-10 transition-opacity duration-500 hover:opacity-30 rounded-md"></div>
-          <div className="absolute top-0 left-0 w-full h-full opacity-0 transition-opacity duration-500 hover:opacity-70 rounded-md"></div>
-        </Link>
+    <div className="bg-white shadow-md rounded-xl overflow-hidden w-full max-w-sm mx-auto mb-16">
+      <img src={image} alt={title} className="w-full h-56 object-cover" />
+
+      <div className="p-4">
+        {/* Status and Price */}
+        <div className="flex justify-between items-center mb-2">
+          <span className="bg-red-600 text-white text-xs font-medium px-3 py-1 rounded-full">
+            {status}
+          </span>
+          <span className="text-blue-700 font-bold text-sm">
+            ${price.toLocaleString()}/
+            <span className="text-gray-500 font-normal">month</span>
+          </span>
+        </div>
+
+        {/* Title */}
+        <h3 className="text-lg font-semibold text-gray-800 mb-1">{title}</h3>
+
+        {/* Location */}
+        <p className="text-sm text-gray-500 flex items-center gap-1 mb-3">
+          <MapPin size={14} /> {location}
+        </p>
+
+        {/* Features */}
+        <div className="grid grid-cols-3 text-center text-sm text-gray-700 border-t pt-3">
+          <div className="flex items-center justify-center gap-1">
+            <Bed size={16} /> {beds}
+          </div>
+          <div className="flex items-center justify-center gap-1">
+            <Bath size={16} /> {baths}
+          </div>
+          <div className="flex items-center justify-center gap-1">
+            <Ruler size={16} /> {area} sqft
+          </div>
+        </div>
       </div>
-      {/* content */}
-      <div className="absolute left-6 lg:left-8 xl:left-10 right-6 lg:right-8 xl:right-10 bottom-6 pr-10 w-full text-start text-white space-y-4">
-        <p className="max-md:text-[0.8rem] mb-4 ">{slide.service}</p>
-        <Link href="/portfolio">
-        <h4 className="pb-6 text-[1.4rem] xl:text-[1.4rem] w-[95%]">{slide.title}</h4>
-        </Link>
-        <Link
-          className="border-AppSecondary hover:-translate-y-1 text-sm rounded-md hidden"
-          href={"/services"}
-        />
-      </div>
-    </>
+    </div>
   );
 };
 

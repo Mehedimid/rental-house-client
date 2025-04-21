@@ -29,7 +29,7 @@ const getNavItems = (role: "tenant" | "landlord" | "admin") => {
     return [
       {
         title: "Dashboard",
-        url: "/tenant/dashboard",
+        url: "/dashboard/tenant/dashboard",
         icon: SquareTerminal,
         isActive: true,
       },
@@ -146,26 +146,27 @@ export function AppSidebar({ role, ...props }: { role: "tenant"| "landlord" | "a
 
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
+      <SidebarHeader >
+        <SidebarMenu >
+          <SidebarMenuItem >
+            <SidebarMenuButton size="lg" asChild >
               <Link href="/">
                 <div className="flex items-center justify-center">
-                  <Image src={Logo} alt="logo" width={36}/>
+                  <Image src={Logo} alt="logo" width={56}/>
+                  <h2 className="text-xl  lg:text-2xl font-bold lg:font-extrabold text-primary">
+            Rental<span className="text-secondary">House</span>
+          </h2>
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <h2 className="font-bold text-xl">TutorLink</h2>
-                </div>
+
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-black text-gray-200">
         <NavMain items={navMain} />
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="bg-black text-gray-200">
         <NavUser />
       </SidebarFooter>
     </Sidebar>

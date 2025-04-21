@@ -1,8 +1,22 @@
-import AdminSidebar from "@/components/dashboard/admin/AdminSidebar";
+"use client";  // This makes this file a Client Component
 
-const DashboardLayout = ({ children }: Readonly<{
-  children: React.ReactNode;
-}>) => {
+import { useSession } from "next-auth/react";
+import AdminSidebar from "../../../components/dashboard/admin/AdminSidebar";
+// import TenantSidebar from "@/components/dashboard/tenant/TenantSidebar";
+// import LandlordSidebar from "@/components/dashboard/landlord/LandlordSidebar";
+
+const DashboardLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (!session) {
+    // Handle the case when the user is not authenticated
+    return <div>You need to sign in</div>;
+  }
+
   return (
 
     <div>

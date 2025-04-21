@@ -1,7 +1,7 @@
 "use client";  // This makes this file a Client Component
 
 import { useSession } from "next-auth/react";
-import AdminSidebar from "@/components/dashboard/admin/AdminSidebar";
+import AdminSidebar from "../../../components/dashboard/admin/AdminSidebar";
 // import TenantSidebar from "@/components/dashboard/tenant/TenantSidebar";
 // import LandlordSidebar from "@/components/dashboard/landlord/LandlordSidebar";
 
@@ -18,19 +18,22 @@ const DashboardLayout = ({ children }: Readonly<{ children: React.ReactNode }>) 
   }
 
   return (
+
     <div>
       <div className="flex">
         <aside>
           {/* Render sidebar based on role */}
-          {/* {session.user.role === "admin" && <AdminSidebar />}
-          {session.user.role === "tenant" && <TenantSidebar />}
-          {session.user.role === "landlord" && <LandlordSidebar />} */}
-          <AdminSidebar/>
+          {/* {user.role === 'admin' && <AdminSidebar />}
+        {user.role === 'tenant' && <TenantSidebar />}
+        {user.role === 'landlord' && <LandlordSidebar />} */}
+          <AdminSidebar />
         </aside>
-        <main>{children}</main>
+        <main>
+          {children}
+        </main>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DashboardLayout;
+export default DashboardLayout

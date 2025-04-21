@@ -29,7 +29,7 @@ const AboutPage = () => {
       {/* Our Story */}
       <section className="py-16">
         <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-3xl font-semibold mb-6">BasaFinder's Journey</h2>
+          <h2 className="text-3xl font-semibold mb-6">BasaFinder&apos;s Journey</h2>
           <p className="text-gray-700 dark:text-gray-300 mb-4">
             BasaFinder was established with the vision to streamline the rental process for both landlords and tenants.
           </p>
@@ -138,7 +138,7 @@ const AboutPage = () => {
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
           <p className="text-lg mb-6">
-            Whether you're a tenant or a landlord, BasaFinder is here to simplify your journey.
+            Whether you&apos;re a tenant or a landlord, BasaFinder is here to simplify your journey.
           </p>
           <a
             href="/signup"

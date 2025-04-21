@@ -6,12 +6,15 @@ interface SlideContentProps {
 
 const SlideContent = ({ imageUrl }: SlideContentProps) => {
   return (
-    <div
-      className="relative w-full h-[700px] bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url(${imageUrl})` }}
-    >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/10 flex flex-col justify-center items-center text-center px-4">
+    <div className="relative w-full h-[700px]">
+      {/* Swiper Background Image */}
+      <div
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${imageUrl})` }}
+      ></div>
+
+      {/* Fixed Overlay Content */}
+      <div className="absolute top-0 left-0 w-full h-[700px] bg-black/30 flex flex-col justify-center items-center text-center px-4 z-20">
         {/* Title & Description */}
         <h1 className="text-white font-bold text-4xl md:text-5xl lg:text-6xl mb-4">
           Luxury House Renting

@@ -28,20 +28,20 @@ const COLORS = ["#4CAF50", "#FF9800", "#F44336"];
 
 // Bar Chart Data (House Rent Spent Over Time)
 const barData = [
-  { name: 2025, cost: 20000 },
-  { name: 2026, cost: 30000 },
-  { name: 2027, cost: 40000 },
-  { name: 2028, cost: 60000 },
-  { name: 2029, cost: 50000 },
+  { name: 2021, cost: 20000 },
+  { name: 2022, cost: 30000 },
+  { name: 2023, cost: 40000 },
+  { name: 2024, cost: 60000 },
+  { name: 2025, cost: 50000 },
 ];
 
 // Line Chart Data (Costing Progress)
 const progressData = [
-  { year: 2025, progress: 30 },
-  { year: 2026, progress: 45 },
-  { year: 2027, progress: 60 },
-  { year: 2028, progress: 80 },
-  { year: 2029, progress: 95 },
+  { year: 2021, progress: 30 },
+  { year: 2022, progress: 45 },
+  { year: 2023, progress: 60 },
+  { year: 2024, progress: 80 },
+  { year: 2025, progress: 95 },
 ];
 
 // New Feature: Room decoration
@@ -55,7 +55,7 @@ const categoryData = [
 const loadShedingHoursData = [
   { day: "Mon", hours: 2 },
   { day: "Tue", hours: 3 },
-  { day: "Wed", hours: 4 },
+  { day: "wed", hours: 4 },
   { day: "Thu", hours: 2 },
   { day: "Fri", hours: 5 },
   { day: "Sat", hours: 1 },
@@ -163,7 +163,7 @@ export default function TenantDashboard() {
 
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-gray-100">
       <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
         Tenant Dashboard
       </h2>
@@ -241,7 +241,7 @@ export default function TenantDashboard() {
                 <XAxis dataKey="name" stroke="#8884d8" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="courses" fill="#4CAF50" barSize={40} />
+                <Bar dataKey="cost" fill="#F44336" barSize={40} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>

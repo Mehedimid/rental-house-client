@@ -1,14 +1,22 @@
+"use client";
+
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import SlideContent from "./SlideContent";
 
 const Banner = () => {
+  const slides = [
+    "https://images.pexels.com/photos/271743/pexels-photo-271743.jpeg",
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+    "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg",
+  ];
+
   return (
-    <div className="relative">
+    <div className="relative w-full h-screen overflow-hidden">
+      {/* Swiper for background images only */}
       <Swiper
         spaceBetween={0}
         centeredSlides={true}
@@ -21,25 +29,29 @@ const Banner = () => {
           type: "progressbar",
         }}
         navigation={{
-          nextEl: ".swiper-button-next", // Ensure next button works
-          prevEl: ".swiper-button-prev", // Ensure prev button works
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
         }}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper"
+        className="h-full"
       >
-        <SwiperSlide>
-          <SlideContent imageUrl="https://images.pexels.com/photos/271743/pexels-photo-271743.jpeg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SlideContent imageUrl="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SlideContent imageUrl="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg" />
-        </SwiperSlide>
+        {slides.map((url, index) => (
+          <SwiperSlide key={index}>
+            <div className="w-full h-screen relative">
+              <Image
+                src={url}
+                alt={`Slide ${index + 1}`}
+                layout="fill"
+                objectFit="cover"
+                priority
+              />
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
 
-      {/* The fixed overlay */}
-      <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/30 flex flex-col justify-center items-center text-center px-4 z-10">
+      {/* Fixed Overlay */}
+      <div className="absolute top-0 left-0 right-0 bottom-0 z-10 bg-black/30 flex flex-col justify-center items-center text-center px-4">
         {/* Title & Description */}
         <h1 className="text-white font-bold text-4xl md:text-5xl lg:text-6xl mb-4">
           Luxury House Renting
@@ -60,30 +72,22 @@ const Banner = () => {
             defaultValue=""
             className="w-full lg:w-1/3 p-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-red-500"
           >
-            <option value="" disabled className="text-black">
+            <option value="" disabled>
               Price Range
             </option>
-            <option value="$500-$1000" className="text-black">
-              $500 - $1000
-            </option>
-            <option value="$1000-$2000" className="text-black">
-              $1000 - $2000
-            </option>
+            <option value="$500-$1000">$500 - $1000</option>
+            <option value="$1000-$2000">$1000 - $2000</option>
           </select>
 
           <select
             defaultValue=""
             className="w-full lg:w-1/3 p-3 border border-gray-300 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-red-500"
           >
-            <option value="" disabled className="text-black">
+            <option value="" disabled>
               Bed & Baths
             </option>
-            <option value="2-1" className="text-black">
-              2 Bed / 1 Bath
-            </option>
-            <option value="3-2" className="text-black">
-              3 Bed / 2 Bath
-            </option>
+            <option value="2-1">2 Bed / 1 Bath</option>
+            <option value="3-2">3 Bed / 2 Bath</option>
           </select>
 
           <button className="px-6 py-2 rounded-full bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold shadow-md hover:shadow-lg hover:from-red-700 hover:to-red-600 transition duration-300">
@@ -129,14 +133,16 @@ const Banner = () => {
         </div>
       </div>
 
-      {/* Ensure Swiper's navigation buttons are clickable */}
-      <div className="swiper-button-prev"></div>
-      <div className="swiper-button-next"></div>
+      {/* Swiper Navigation Buttons */}
+      <div className="swiper-button-prev z-20"></div>
+      <div className="swiper-button-next z-20"></div>
 
-      {/* Ensure Swiper's navigation buttons are above the overlay */}
-      <style jsx>{`
-        .swiper-button-next, .swiper-button-prev {
-          z-index: 20; /* Ensure the navigation arrows are above the overlay */
+      {/* Ensure buttons appear above overlay */}
+      <style jsx global>{`
+        .swiper-button-next,
+        .swiper-button-prev {
+          color: white;
+          z-index: 30;
         }
       `}</style>
     </div>

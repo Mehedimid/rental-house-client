@@ -1,12 +1,11 @@
-import React from 'react';
-import LoginForm from '../../../components/login/LoginForm';
+import React from "react";
 
-const page = () => {
+const Login = () => {
   return (
-    <div className='container mx-auto justify-center'>
-      <LoginForm/>
-    </div>
+<div>
+  login page
+</div>
   );
 };
 
-export default page;
+export default Login;

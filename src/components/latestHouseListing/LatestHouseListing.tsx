@@ -1,11 +1,10 @@
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 
 import { Pagination, Autoplay } from "swiper/modules";
 
-import "../sliderStyles.css"
+import "../sliderStyles.css";
 import sliderData from "./slider.json";
 import SectionHeader from "../shared/SectionHeader";
 import ProjectCard from "./ProjectCard";
@@ -13,12 +12,12 @@ import ProjectCard from "./ProjectCard";
 const LatestHouseListing = () => {
   return (
     <div>
-     <div className="space-y-4 text-center">
-     <SectionHeader
+      <div className="space-y-4 text-center">
+        <SectionHeader
           title="Latest House Listings"
           subtitle="OUR PROPERTIES"
-        ></SectionHeader>
-     </div>
+        />
+      </div>
 
       <Swiper
         spaceBetween={30}
@@ -48,13 +47,16 @@ const LatestHouseListing = () => {
           },
         }}
         onSwiper={(swiper) => {
-          swiper.el.addEventListener("mouseenter", () => swiper.autoplay.pause());
-          swiper.el.addEventListener("mouseleave", () => swiper.autoplay.start());
+          // Stop autoplay on mouse enter
+          swiper.el.addEventListener("mouseenter", () => swiper.autoplay?.stop());
+
+          // Start autoplay on mouse leave
+          swiper.el.addEventListener("mouseleave", () => swiper.autoplay?.start());
         }}
       >
         {sliderData.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <ProjectCard slide={slide}/>
+            <ProjectCard slide={slide} />
           </SwiperSlide>
         ))}
       </Swiper>

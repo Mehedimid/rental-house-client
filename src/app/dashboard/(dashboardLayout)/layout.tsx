@@ -2,14 +2,16 @@
 
 import { useSession } from "next-auth/react";
 import AdminSidebar from "../../../components/dashboard/admin/AdminSidebar";
+import Loader from "@/components/shared/Loader";
 // import TenantSidebar from "@/components/dashboard/tenant/TenantSidebar";
 // import LandlordSidebar from "@/components/dashboard/landlord/LandlordSidebar";
 
 const DashboardLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const { data: session, status } = useSession();
+  console.log(session?.user)
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <Loader/>;
   }
 
   if (!session) {

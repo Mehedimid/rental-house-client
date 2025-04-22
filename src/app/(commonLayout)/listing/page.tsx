@@ -8,14 +8,13 @@ const PropertyListingPage = () => {
   const properties = [
     {
       images: {
-        img1: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-8.jpg",
-        img2: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-8.jpg",
-        img3: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-8.jpg",
-        img4: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-8.jpg",
-        img5: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-8.jpg",
+        img1: "https://img.freepik.com/premium-photo/building-with-balconies-balconies_991208-8176.jpg",
+        img2: "https://img.freepik.com/free-photo/modern-studio-apartment-design-with-bedroom-living-space_1262-12375.jpg",
+        img3: "https://img.freepik.com/free-photo/3d-rendering-loft-luxury-living-room-with-bookshelf-near-bookshelf_105762-2224.jpg",
+        img4: "https://img.freepik.com/premium-photo/empty-chairs-tables-home_1048944-26815975.jpg",
+        img5: "https://img.freepik.com/premium-photo/empty-sofa-house_1048944-4751817.jpg",
       },
-      flatPlan:
-        "https://templates.hibootstrap.com/fela/default/assets/img/property/floor-plan.png",
+      flatPlan: "https://templates.hibootstrap.com/fela/default/assets/img/property/floor-plan.png",
       title: "Luxury Villa in Bashundhara",
       address: "Road 5, Block C, Bashundhara R/A, Dhaka",
       price: "৳90,000/mo",
@@ -45,14 +44,13 @@ const PropertyListingPage = () => {
     },
     {
       images: {
-        img1: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-11.jpg",
-        img2: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-11.jpg",
-        img3: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-11.jpg",
-        img4: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-11.jpg",
-        img5: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-11.jpg",
+        img1: "https://img.freepik.com/premium-photo/building-with-balconies-that-has-word-it_991208-26685.jpg",
+        img2: "https://img.freepik.com/free-photo/modern-studio-apartment-design-with-bedroom-living-space_1262-12375.jpg",
+        img3: "https://img.freepik.com/free-photo/3d-rendering-loft-luxury-living-room-with-bookshelf-near-bookshelf_105762-2224.jpg",
+        img4: "https://img.freepik.com/premium-photo/empty-chairs-tables-home_1048944-26815975.jpg",
+        img5: "https://img.freepik.com/premium-photo/empty-sofa-house_1048944-4751817.jpg",
       },
-      flatPlan:
-        "https://templates.hibootstrap.com/fela/default/assets/img/property/floor-plan.png",
+      flatPlan: "https://templates.hibootstrap.com/fela/default/assets/img/property/floor-plan.png",
       title: "Modern Apartment in Dhanmondi",
       address: "House 12, Road 7A, Dhanmondi, Dhaka",
       price: "৳35,000/mo",
@@ -78,14 +76,13 @@ const PropertyListingPage = () => {
     },
     {
       images: {
-        img1: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-3.jpg",
-        img2: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-3.jpg",
-        img3: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-3.jpg",
-        img4: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-3.jpg",
-        img5: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-3.jpg",
+        img1: "https://img.freepik.com/premium-photo/modern-architecture-urban-residential-apartment-building-apartment-building-exterior_991208-25938.jpg",
+        img2: "https://img.freepik.com/free-photo/3d-rendering-beautiful-luxury-bedroom-suite-hotel-with-tv_105762-2109.jpg",
+        img3: "https://img.freepik.com/free-photo/3d-rendering-modern-design-marble-tile-toilet-bathroom_105762-2043.jpg",
+        img4: "https://img.freepik.com/free-photo/luxury-working-room-executive-office_105762-1725.jpg",
+        img5: "https://img.freepik.com/free-photo/luxury-working-room-executive-office_105762-1725.jpg",
       },
-      flatPlan:
-        "https://templates.hibootstrap.com/fela/default/assets/img/property/floor-plan.png",
+      flatPlan: "https://templates.hibootstrap.com/fela/default/assets/img/property/floor-plan.png",
       title: "Penthouse in Gulshan",
       address: "Road 90, Gulshan-2, Dhaka",
       price: "৳50,000/mo",
@@ -111,26 +108,20 @@ const PropertyListingPage = () => {
     },
     {
       images: {
-        img1: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-4.jpg",
-        img2: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-4.jpg",
-        img3: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-4.jpg",
-        img4: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-4.jpg",
-        img5: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-4.jpg",
+        img1: "https://img.freepik.com/premium-photo/modern-building-dubai_218381-556.jpg",
+        img2: "https://img.freepik.com/free-photo/3d-rendering-loft-luxury-living-room-with-bookshelf_105762-2182.jpg",
+        img3: "https://img.freepik.com/free-photo/room-interior-hotel-bedroom_23-2150683419.jpg",
+        img4: "https://img.freepik.com/free-photo/scandinavian-living-room-interior-design-zoom-background_53876-143147.jpg",
+        img5: "https://img.freepik.com/free-photo/scandinavian-living-room-interior-design-zoom-background_53876-143147.jpg",
       },
-      flatPlan:
-        "https://templates.hibootstrap.com/fela/default/assets/img/property/floor-plan.png",
+      flatPlan: "https://templates.hibootstrap.com/fela/default/assets/img/property/floor-plan.png",
       title: "Flat in Chawkbazar",
       address: "Chawkbazar, Chattogram",
       price: "৳25,000/mo",
       sqft: 850,
       beds: 2,
       baths: 1,
-      propertyFeatures: [
-        "Laundry",
-        "Parking",
-        "Fireplace",
-        "Window Coverings",
-      ],
+      propertyFeatures: ["Laundry", "Parking", "Fireplace", "Window Coverings"],
       details: {
         landlord: "BD1004",
         type: "Flat",
@@ -143,25 +134,20 @@ const PropertyListingPage = () => {
     },
     {
       images: {
-        img1: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-17.jpg",
-        img2: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-17.jpg",
-        img3: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-17.jpg",
-        img4: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-17.jpg",
-        img5: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-17.jpg",
+        img1: "https://img.freepik.com/premium-photo/building-with-balconies-balconies_991208-8176.jpg",
+        img2: "https://img.freepik.com/free-photo/modern-studio-apartment-design-with-bedroom-living-space_1262-12375.jpg",
+        img3: "https://img.freepik.com/free-photo/3d-rendering-loft-luxury-living-room-with-bookshelf-near-bookshelf_105762-2224.jpg",
+        img4: "https://img.freepik.com/premium-photo/empty-chairs-tables-home_1048944-26815975.jpg",
+        img5: "https://img.freepik.com/premium-photo/empty-sofa-house_1048944-4751817.jpg",
       },
-      flatPlan:
-        "https://templates.hibootstrap.com/fela/default/assets/img/property/floor-plan.png",
+      flatPlan: "https://templates.hibootstrap.com/fela/default/assets/img/property/floor-plan.png",
       title: "Studio Flat in Sylhet",
       address: "Zindabazar, Sylhet",
       price: "৳15,000/mo",
       sqft: 500,
       beds: 1,
       baths: 1,
-      propertyFeatures: [
-        "Air Conditioned",
-        "Laundry",
-        "Parking",
-      ],
+      propertyFeatures: ["Air Conditioned", "Laundry", "Parking"],
       details: {
         landlord: "BD1005",
         type: "Studio",
@@ -174,14 +160,13 @@ const PropertyListingPage = () => {
     },
     {
       images: {
-        img1: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-6.jpg",
-        img2: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-6.jpg",
-        img3: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-6.jpg",
-        img4: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-6.jpg",
-        img5: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-6.jpg",
+        img1: "https://img.freepik.com/premium-photo/building-with-balconies-balconies_991208-8176.jpg",
+        img2: "https://img.freepik.com/free-photo/modern-studio-apartment-design-with-bedroom-living-space_1262-12375.jpg",
+        img3: "https://img.freepik.com/free-photo/3d-rendering-loft-luxury-living-room-with-bookshelf-near-bookshelf_105762-2224.jpg",
+        img4: "https://img.freepik.com/premium-photo/empty-chairs-tables-home_1048944-26815975.jpg",
+        img5: "https://img.freepik.com/premium-photo/empty-sofa-house_1048944-4751817.jpg",
       },
-      flatPlan:
-        "https://templates.hibootstrap.com/fela/default/assets/img/property/floor-plan.png",
+      flatPlan: "https://templates.hibootstrap.com/fela/default/assets/img/property/floor-plan.png",
       title: "Duplex House in Uttara",
       address: "Sector 7, Uttara, Dhaka",
       price: "৳60,000/mo",
@@ -208,11 +193,12 @@ const PropertyListingPage = () => {
     },
   ];
   
+  
 
   const handleFilterChange = () => {};
 
   return (
-    <div className=" min-h-screen py-8">
+    <div className=" min-h-screen pb-8">
       <div className="container mx-auto w-7/8">
       <SectionHeader subtitle="Rent Your House" title="Listing"></SectionHeader>
         <div className="flex flex-col lg:flex-row">

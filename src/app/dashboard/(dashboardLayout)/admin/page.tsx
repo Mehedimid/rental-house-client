@@ -1,8 +1,9 @@
-import React from 'react'
+import Overview from '@/components/dashboard/admin/Overview'
+
 
 const AdminDashboard = () => {
   return (
-    <div>AdminDashboard</div>
+    <Overview/>
   )
 }
 

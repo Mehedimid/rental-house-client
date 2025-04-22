@@ -7,6 +7,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import SecondaryButton from "@/components/shared/SecondaryButton";
+import Image from "next/image";
 
 const RequestBooking = () => {
   const router = useRouter();
@@ -46,7 +47,7 @@ const RequestBooking = () => {
   };
 
   return (
-    <div className="w-7/8 mx-auto px-4 py-10 grid grid-cols-2 gap-10">
+    <div className="md:w-7/8 mx-auto px-4 py-10 grid md:grid-cols-2 gap-10">
 
       {/* Booking Form */}
       <div className="bg-white p-8 rounded-2xl shadow-lg">
@@ -103,8 +104,14 @@ const RequestBooking = () => {
 
       {/* Property Preview */}
       <div className="rounded-2xl shadow-lg overflow-hidden bg-white">
-        <img src={property.image} alt={property.title} className="w-full h-72 object-cover" />
-        <div className="p-6 space-y-2">
+      <Image
+        src={property.image}
+        alt={property.title}
+        layout="responsive"
+        width={650}
+        height={550}
+        objectFit="cover"
+      />        <div className="p-6 space-y-2">
           <h2 className="text-2xl font-semibold text-gray-800">{property.title}</h2>
           <p className="text-gray-600">{property.address}</p>
           <p className="text-lg text-primary font-bold">{property.price}</p>

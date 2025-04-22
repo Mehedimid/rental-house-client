@@ -39,12 +39,12 @@ const getNavItems = (role: "tenant" | "landlord" | "admin") => {
         icon: Bot,
         items: [
           {
-            title: "Apply Rental Deed",
-            url: "/tenant/apply-rental-deed",
+            title: "Request Rent List",
+            url: "/dashboard/tenant/request-rent",
           },
           {
-            title: "Show All Deed",
-            url: "/tenant/show-all-deed",
+            title: "Rented House",
+            url: "/dashboard/tenant/rented-house",
           },
           
         ],
@@ -56,18 +56,18 @@ const getNavItems = (role: "tenant" | "landlord" | "admin") => {
         items: [
           {
             title: "Give Review",
-            url: "/tenant/give-review"
+            url: "/dashboard/tenant/give-review"
           },
           {
             title: "Manage Review",
-            url: "/tenant/manage-review"
+            url: "/dashboard/tenant/manage-review"
           },
           
         ],
       },
       {
         title: "Update Profile",
-        url: "/tenant//update-profile",
+        url: "/dashboard/tenant/update-profile",
         icon: User,
         isActive: true,
       },

@@ -1,7 +1,9 @@
 "use client";
 
+import Testimonials from "@/components/aboutUs/Testimonials";
+import Marquee from "@/components/aboutUs/Marquee";
 import React, { useEffect } from "react";
-import Marquee from "react-fast-marquee";
+
 
 const AboutPage = () => {
   useEffect(() => {
@@ -88,67 +90,10 @@ const AboutPage = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-semibold text-black dark:text-white text-center mb-12">What Our Users Say</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                quote: "BasaFinder made finding my new apartment a breeze. Highly recommended!",
-                name: "Alex Johnson",
-                role: "Tenant",
-                img: "https://randomuser.me/api/portraits/men/11.jpg"
-              },
-              {
-                quote: "Listing my property was straightforward, and I found a tenant in no time.",
-                name: "Maria Gomez",
-                role: "Landlord",
-                img: "https://randomuser.me/api/portraits/women/65.jpg"
-              },
-              {
-                quote: "The support team was incredibly helpful throughout the process.",
-                name: "Liam Smith",
-                role: "Tenant",
-                img: "https://randomuser.me/api/portraits/men/33.jpg"
-              },
-            ].map((item, idx) => (
-              <div key={idx} className="bg-white dark:bg-gray-800 p-6 shadow rounded text-center">
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="w-16 h-16 mx-auto rounded-full mb-4 object-cover"
-                />
-                <p className="text-gray-700 dark:text-gray-300 mb-4">{item.quote}</p>
-                <h4 className="font-bold text-black dark:text-white">{item.name}</h4>
-                <span className="text-sm text-gray-500 dark:text-gray-400">{item.role}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Testimonials/>
 
       {/* Logo Marquee */}
-      <section className="bg-gray-100 dark:bg-gray-800 py-10">
-        <Marquee speed={40} gradient={false}>
-          {Array(3)
-            .fill([
-              "69524",
-              "69525",
-              "69526",
-              "69527",
-              "69528"
-            ])
-            .flat()
-            .map((id, i) => (
-              <img
-                key={i}
-                src={`https://cdn-icons-png.flaticon.com/512/69/${id}.png`}
-                alt={`Icon ${i}`}
-                className="h-12 mx-10"
-              />
-            ))}
-        </Marquee>
-      </section>
+      <Marquee/>
 
       {/* Call-to-Action Section */}
       <section className="bg-blue-600 py-20 text-white dark:bg-blue-800">

@@ -46,6 +46,7 @@ const RegistrationForm = () => {
 
       if (response.data?.success) {
         alert("Registration successful! Please login.");
+        console.log(response)
         router.push("/login");
       } else {
         alert("Registration failed.");

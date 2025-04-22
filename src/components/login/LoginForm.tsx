@@ -26,7 +26,7 @@ const LoginForm = () => {
     if (result?.error) {
       setError("Invalid email or password");
     } else {
-      router.push("/login"); // change this to your protected route
+      router.push("/"); 
     }
   };
 

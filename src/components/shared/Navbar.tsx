@@ -52,6 +52,7 @@ export const Navbar = () => {
     { name: "FAQ", path: "/faq" },
     { name: "Terms & Conditions", path: "/terms" }, 
     { name: "Contact", path: "/contact" },
+
   ];
 
   return (
@@ -86,11 +87,11 @@ export const Navbar = () => {
             </li>
           );
         })}
-        <PrimaryButton customClass="text-base font-semibold" path="/login">
-          Login
+        <PrimaryButton customClass="text-base font-semibold">
+          <Link href="/login">Login</Link>
         </PrimaryButton>
-        <SecondaryButton customClass="text-base font-semibold" path="/register">
-          Sign up
+        <SecondaryButton customClass="text-base font-semibold" >
+          <Link href="/register">Sign up</Link>
         </SecondaryButton>
       </ul>
 

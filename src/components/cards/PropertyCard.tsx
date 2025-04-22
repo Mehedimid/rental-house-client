@@ -1,8 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
+
 import { FaBed, FaBath, FaMapMarkerAlt, FaRulerCombined } from "react-icons/fa";
 import PrimaryButton from "../shared/PrimaryButton";
 import Link from "next/link";
 import { useState } from "react";
-import Image from "next/image";
 
 interface PropertyCardProps {
   images: {
@@ -43,34 +44,35 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="relative w-full aspect-[16/9] overflow-hidden rounded-t-lg">
-        {/* Image Carousel */}
-        <Image
-          src={imageList[currentImage]}
-          alt={title}
-          fill
-          className="rounded-t-lg object-cover"
-        />
+<div className="relative w-full aspect-w-16 aspect-h-9 overflow-hidden rounded-t-lg">
+  {/* Image Carousel */}
+  <img
+    src={imageList[currentImage]}
+    alt={title}
+    className="w-full h-full object-cover transition duration-300"
+  />
 
-        {/* Badge */}
-        <span className="absolute top-2 left-2 bg-secondary text-white text-xs font-semibold rounded-md px-4 py-2 z-10">
-          For Rent
-        </span>
+  {/* Badge */}
 
-        {/* Carousel Controls */}
-        <button
-          onClick={handlePrev}
-          className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10 hover:bg-black/70"
-        >
-          ‹
-        </button>
-        <button
-          onClick={handleNext}
-          className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10 hover:bg-black/70"
-        >
-          ›
-        </button>
-      </div>
+    <span className="absolute top-2 left-2 bg-secondary text-white text-xs font-semibold rounded-md px-4 py-2 z-10">
+      For Rent
+    </span>
+
+
+  {/* Carousel Controls */}
+  <button
+    onClick={handlePrev}
+    className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10 hover:bg-black/70"
+  >
+    ‹
+  </button>
+  <button
+    onClick={handleNext}
+    className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10 hover:bg-black/70"
+  >
+    ›
+  </button>
+</div>
 
       <div className="p-4">
         <h3 className="text-lg font-semibold text-gray-800 mb-2">{title}</h3>

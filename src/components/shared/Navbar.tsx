@@ -48,7 +48,7 @@ export const Navbar = () => {
   const menuItems = [
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about-us" },
-    { name: "Listings", path: "/listings" },
+    { name: "Listings", path: "/listing" },
     { name: "FAQ", path: "/faq" },
     { name: "Terms & Conditions", path: "/terms" }, 
     { name: "Contact", path: "/contact" },

@@ -1,6 +1,6 @@
 
 
-import ManageApplyTable from "@/components/module/request-rent/ManageApplyTable";
+import ManageApplyTable from "@/components/dashboard/tenant/request-rent/ManageApplyTable";
 
 import React from "react";
 

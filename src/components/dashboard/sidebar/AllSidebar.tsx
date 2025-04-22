@@ -41,7 +41,7 @@ const AdminSidebar = () => {
   const tenantLinks = [
     { label: "Dashboard Overview", href: "/dashboard/tenant" },
     { label: "Rental Requests", href: "/dashboard/tenant/rental-request" },
-    { label: "Rented houses", href: "/dashboard/tenant/rented-house" },
+    { label: "Rental Status", href: "/dashboard/tenant/rental-status" },
   ];
 
   const landlordLinks = [
@@ -65,7 +65,7 @@ const AdminSidebar = () => {
         } transition-all duration-300 min-h-screen flex flex-col justify-between px-4 py-6 sidebar-theme shadow-theme`}
     >
       {/* Toggle Button */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center ml-2 mb-6">
         {isExpanded && <h2 className="text-xl font-bold">Dashboard</h2>}
         <button onClick={toggleSidebar}>
           {isExpanded ? <X size={20} /> : <Menu size={20} />}

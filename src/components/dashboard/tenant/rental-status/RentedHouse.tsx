@@ -13,7 +13,7 @@ import {
 import { IBooking, IListing } from "@/types/types";
 import Loader from "@/components/shared/Loader";
 
-const ManageApplyTable = () => {
+const RentedHouse = () => {
   const { data: session, status } = useSession();
   const [bookingData, setBookingData] = useState<IBooking[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -23,11 +23,6 @@ const ManageApplyTable = () => {
 
   const tenantId = session?.user?.id;
 
- 
-
-console.log("Decoded ID:", session?.user?.id);
-
-  console.log(session?.user)
   // Fetch booking data
   useEffect(() => {
     const fetchBookings = async () => {
@@ -37,7 +32,7 @@ console.log("Decoded ID:", session?.user?.id);
         setLoading(true);
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/booking-request/tenant-bookings/${tenantId}`);
         setBookingData(response.data.data);
-        console.log("response",response.data.data)
+        console.log("response", response.data.data);
       } catch (err: unknown) {
         setError("Error fetching booking data");
         console.error(err);
@@ -53,7 +48,7 @@ console.log("Decoded ID:", session?.user?.id);
   const handleViewDetails = async (listingId: string) => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/listings/${listingId}`);
-      setListingDetails(response.data);
+      setListingDetails(response.data.data);
       setIsModalOpen(true);
     } catch (error) {
       console.error("Error fetching listing details", error);
@@ -62,42 +57,56 @@ console.log("Decoded ID:", session?.user?.id);
 
   if (status === "loading") return <div>Loading session...</div>;
   if (status === "unauthenticated") return <div>Please log in to see your bookings.</div>;
-  if (loading) return <Loader/>;
-  // if (!loading && bookingData.length === 0) return <div>No bookings found.</div>;
+  if (loading) return <Loader />;
   if (error) return <div>{error}</div>;
 
-  console.log('bookingData:', bookingData);
+  // Filter bookings: Exclude bookings with 'pending' status
+  const filteredBookings = bookingData.filter(
+    (booking) => booking.bookingStatus !== "pending"
+  );
 
   return (
     <div>
-      <div className="overflow-x-auto rounded-2xl border border-gray-300 my-5">
-        <table className="min-w-full border border-gray-300 bg-white rounded-3xl">
+      <div className="overflow-x-auto shadow-theme border border-sidebar-theme my-10">
+        <table className="min-w-full bg-white">
           <thead>
             <tr className="bg-gray-100">
-              <th className="border p-3 text-black text-left">Title</th>
-              <th className="border p-3 text-black text-left">Status</th>
-              <th className="border p-3 text-black text-center">Payment Status</th>
-              <th className="border p-3 text-black text-center">Action</th>
+              <th className="border p-3 border-gray-200 text-black text-left">Title</th>
+              <th className="border p-3 border-gray-200 text-black text-left">Status</th>
+              <th className="border p-3 border-gray-200 text-black text-center">Payment Status</th>
+              <th className="border p-3 border-gray-200 text-black text-center">Action</th>
             </tr>
           </thead>
           <tbody>
-            {bookingData?.map((item) => (
-              <tr key={item?._id} className="border">
-                <td className="border p-3 text-black">{item?.listing.title}</td>
-                <td className="border p-3 text-black capitalize">
-                  {item?.bookingStatus || "pending"}
+            {filteredBookings.map((item) => (
+              <tr key={item._id} className="border">
+                <td className="border border-gray-200 p-3 text-black">{item.listing.title}</td>
+                <td className="border border-gray-200 p-3 text-black capitalize">
+                  {item.bookingStatus}
                 </td>
-                <td className="border p-3 text-black capitalize">
-                  {item?.paymentStatus ? "Paid" : "Not Paid"}
+                <td className="border border-gray-200 p-3 text-black capitalize">
+                  {item.paymentStatus ? "Paid" : "Not Paid"}
                 </td>
-                <td className="border p-3 text-black text-center">
-                  <Button
-                    variant="outline"
-                    className="rounded-full text-white"
-                    onClick={() => handleViewDetails(item?.listing._id)}
-                  >
-                    View Details
-                  </Button>
+                <td className="border border-gray-200 p-3 text-black text-center">
+                  {item.bookingStatus === "accepted" && !item.paymentStatus ? (
+                    <Button
+                      variant="outline"
+                      className="rounded-full text-white"
+                      onClick={() => handleViewDetails(item.listing._id)}
+                    >
+                      Pay Now
+                    </Button>
+                  ) : item.paymentStatus ? (
+                    <span>Paid</span>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      className="rounded-full text-white"
+                      onClick={() => handleViewDetails(item.listing._id)}
+                    >
+                      View Details
+                    </Button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -129,6 +138,7 @@ console.log("Decoded ID:", session?.user?.id);
   );
 };
 
-export default ManageApplyTable;
+export default RentedHouse;
 
 
+// RentedHouse

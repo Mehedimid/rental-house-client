@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import AdminSidebar from "../../../components/dashboard/admin/AdminSidebar";
+import AllSidebar from "../../../components/dashboard/sidebar/AllSidebar";
 import Loader from "@/components/shared/Loader";
 
 const DashboardLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
@@ -19,7 +19,7 @@ const DashboardLayout = ({ children }: Readonly<{ children: React.ReactNode }>) 
     <div className="relative">
       {/* Sidebar fixed on the left */}
       <aside className="fixed top-0 left-0 h-screen w-64 z-50">
-        <AdminSidebar />
+        <AllSidebar />
       </aside>
 
       {/* Main content pushes to the right */}

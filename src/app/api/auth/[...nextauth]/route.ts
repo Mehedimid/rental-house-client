@@ -17,14 +17,15 @@ const handler = NextAuth({
             email: credentials?.email,
             password: credentials?.password,
           });
+          console.log("Login response:", res.data);
 
           const { accessToken, user } = res.data.data;
 
           if (accessToken && user) {
-            console.log(user.name)
+            console.log(user.id)
             return {
               ...user,
-              id: user._id,
+              id: user.id,
               accessToken, 
             } as User;
           }
@@ -59,10 +60,19 @@ const handler = NextAuth({
       return token;
     },
     async session({ session, token }) {
+      console.log('Session:', session);
       if (token) {
         // Ensure the token user is of type User
+        const userData = token.user as User;
         session.accessToken = token.accessToken as string;
-        session.user = token.user as User; // Cast token.user to User type
+        session.user = {
+          id: userData.id,
+          name: userData.name,
+          email: userData.email,
+          phone: userData.phone,
+          role: userData.role,
+          imageUrl: userData.imageUrl,
+        }; // Cast token.user to User type
       }
       return session as Session; // Return the custom Session type
     },

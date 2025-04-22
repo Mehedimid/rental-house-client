@@ -1,4 +1,4 @@
-import RentedHouse from '@/components/dashboard/tenant/rented-House/RentedHouse';
+import RentedHouse from '@/components/dashboard/tenant/rental-status/RentedHouse';
 import React from 'react';
 
 const page = () => {

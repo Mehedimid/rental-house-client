@@ -55,6 +55,7 @@ const handler = NextAuth({
         // Ensure that user is of type User
         const userData = user as User; // Type assertion
         token.accessToken = userData.accessToken;
+        token.email = userData.email;
         token.user = userData; // Cast user to User
       }
       return token;
@@ -68,7 +69,7 @@ const handler = NextAuth({
         session.user = {
           id: userData.id,
           name: userData.name,
-          email: userData.email,
+          email: token.email || "",
           phone: userData.phone,
           role: userData.role,
           imageUrl: userData.imageUrl,

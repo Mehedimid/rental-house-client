@@ -1,9 +1,12 @@
-import React from 'react'
+import UpdateProfileForm from '@/components/dashboard/profile/UpdateProfileForm';
+import React from 'react';
 
-function UpdateProfile() {
+const page = () => {
   return (
-    <div className="flex items-center justify-center">UpdateProfile</div>
-  )
-}
+    <div>
+      <UpdateProfileForm/>
+    </div>
+  );
+};
 
-export default UpdateProfile
+export default page;

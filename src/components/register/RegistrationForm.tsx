@@ -123,14 +123,17 @@ const RegistrationForm = () => {
             onChange={(e) => setPhone(e.target.value)}
             className="border border-gray-300 focus:border-secondary outline-none p-3 w-full text-sm placeholder-secondary"
           />
+          
 
-<div className="relative">
+          {/* image upload */}
+          <div className="relative">
             <input
               id="image"
               type="file"
               onChange={handleImageChange}
               accept="image/*"
               className="hidden"
+              required
             />
             <label
               htmlFor="image"

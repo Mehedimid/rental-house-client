@@ -69,6 +69,7 @@ const ProfileCard = () => {
   const handleChangePassword = () => {
     // Logic for changing password
     console.log('Change password clicked');
+    router.push('/dashboard/profile/change-password');
   };
 
   return (

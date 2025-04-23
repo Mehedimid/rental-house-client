@@ -144,12 +144,12 @@ const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
       </div>
 
       <div className="flex justify-center items-center">
-        <button type="button" onClick={applyFilters}>
-          <SecondaryButton customClass="w-full">
+        {/* <button type="button"> */}
+          <SecondaryButton  onClick={applyFilters} customClass="w-full">
             {" "}
             Filter By Features
           </SecondaryButton>
-        </button>
+        {/* </button> */}
       </div>
     </div>
   );

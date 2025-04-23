@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import PropertyCard from "@/components/cards/PropertyCard";
 import useListing from "@/components/hooks/listing/useLIsting";
@@ -136,8 +137,8 @@ const PropertyListingPage = () => {
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-2/3">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-6">
-              {properties.map((property, index) => (
-                <PropertyCard key={index} {...property} />
+              {properties.map((property :any) => (
+                <PropertyCard key={property?._id} {...property} />
               ))}
             </div>
 

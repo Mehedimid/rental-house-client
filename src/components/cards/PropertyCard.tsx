@@ -5,12 +5,13 @@ import { useState } from "react";
 import Image from "next/image";
 
 interface PropertyCardProps {
+  _id:string
   images: {
-    img1: string;
-    img2: string;
-    img3: string;
-    img4: string;
-    img5: string;
+    img1?: string;
+    img2?: string;
+    img3?: string;
+    img4?: string;
+    img5?: string;
   };
   forRent?: boolean;
   price: string;
@@ -22,6 +23,7 @@ interface PropertyCardProps {
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({
+  _id,
   images,
   price,
   title,
@@ -46,7 +48,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       <div className="relative w-full aspect-[16/9] overflow-hidden rounded-t-lg">
         {/* Image Carousel */}
         <Image
-          src={imageList[currentImage]}
+          src={imageList[currentImage] || "https://img.freepik.com/free-vector/hand-drawn-no-photo-sign_23-2149278213.jpg?ga=GA1.1.1518679940.1727447932&semt=ais_hybrid&w=740"}
           alt={title}
           fill
           className="rounded-t-lg object-cover"
@@ -98,7 +100,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           )}
         </div>
         <div className="mt-4">
-          <Link href={"/listing/id"}>
+          <Link href={`/listing/${_id}`}>
             <PrimaryButton customClass="w-full">View Details</PrimaryButton>
           </Link>
         </div>

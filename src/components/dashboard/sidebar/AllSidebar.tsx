@@ -46,8 +46,8 @@ const AdminSidebar = () => {
 
   const landlordLinks = [
     { label: "Dashboard Overview", href: "/dashboard/landlord" },
-    { label: "My Listings", href: "/dashboard/landlord/listings" },
-    { label: "My Rentals", href: "/dashboard/landlord/rentals" },
+    { label: "My Listings", href: "/dashboard/landlord/rental-listings" },
+    { label: "My Rentals", href: "/dashboard/landlord/rental-requests" },
   ];
 
   let links: Link[] = [];

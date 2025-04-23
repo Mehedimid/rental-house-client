@@ -4,15 +4,19 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useSession, signOut } from "next-auth/react"; // Importing useSession and signOut from next-auth/react
 import logo from "../../assets/rental.png";
 import PrimaryButton from "./PrimaryButton";
 import SecondaryButton from "./SecondaryButton";
+import { LogOut } from "lucide-react";
 
 export const Navbar = () => {
   const pathname = usePathname();
   const [dropDownState, setDropDownState] = useState(false);
   const dropDownMenuRef = useRef(null);
   const [scrolled, setScrolled] = useState(false);
+
+  const { data: session } = useSession(); // Get session data
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,15 +27,10 @@ export const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    if (dropDownState) {
-      document.body.style.overflow = "hidden";
-      const scrollBtn = document.querySelector("button.scroll-to-top") as HTMLElement;
-      if (scrollBtn) scrollBtn.style.display = "none";
-    } else {
-      document.body.style.overflow = "auto";
-      const scrollBtn = document.querySelector("button.scroll-to-top") as HTMLElement;
-      if (scrollBtn) scrollBtn.style.display = "flex";
-    }
+    const scrollBtn = document.querySelector("button.scroll-to-top") as HTMLElement;
+if (scrollBtn) {
+  scrollBtn.style.display = dropDownState ? "none" : "flex";
+}
 
     return () => {
       document.body.style.overflow = "auto";
@@ -50,16 +49,14 @@ export const Navbar = () => {
     { name: "About Us", path: "/about-us" },
     { name: "Listings", path: "/listing" },
     { name: "FAQ", path: "/faq" },
-    { name: "Terms & Conditions", path: "/terms" }, 
+    { name: "Terms & Conditions", path: "/terms" },
     { name: "Contact", path: "/contact" },
-
   ];
 
   return (
     <nav
-      className={`section-padding-x fixed md:fixed lg:absolute z-30 w-full flex items-center justify-between bg-[#b2b2f1] py-0 lg:container px-3 text-white left-1/2 transform -translate-x-1/2 ${
-        scrolled ? "md:bg-[#b2b2f1] md:py-2" : "bg-transparent"
-      }`}
+      className={`section-padding-x fixed md:fixed lg:absolute z-30 w-full flex items-center justify-between bg-[#b2b2f1] pt-3 lg:container px-3 text-white left-1/2 transform -translate-x-1/2 ${scrolled ? "md:bg-[#b2b2f1] md:py-2" : "bg-transparent"
+        }`}
       style={navbarStyles}
     >
       {/* Logo */}
@@ -79,20 +76,59 @@ export const Navbar = () => {
           return (
             <li
               key={name}
-              className={`group flex cursor-pointer flex-col py-6 relative transition-all duration-300 hover:text-secondary ${
-                isActive ? "text-secondary" : "text-primary"
-              }`}
+              className={`group flex cursor-pointer flex-col py-6 relative transition-all duration-300 hover:text-secondary ${isActive ? "text-secondary" : "text-primary"
+                }`}
             >
               <Link href={path}>{name}</Link>
             </li>
           );
         })}
-        <PrimaryButton customClass="text-base font-semibold">
-          <Link href="/login">Login</Link>
-        </PrimaryButton>
-        <SecondaryButton customClass="text-base font-semibold" >
-          <Link href="/register">Sign up</Link>
-        </SecondaryButton>
+
+        {/* Avatar and Dropdown (if user is logged in) */}
+        <div className="relative">
+          {session?.user && (
+            <div className="relative">
+              <button
+                onClick={() => setDropDownState(!dropDownState)}
+                className="rounded-full overflow-hidden focus:outline-none focus:ring-2 focus:ring-white"
+                aria-label="User Menu"
+              >
+                <Image
+                  src={session.user.imageUrl || "/default-avatar.jpg"}
+                  alt="User Avatar"
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+              </button>
+              {/* Dropdown Menu */}
+              {dropDownState && (
+                <div className="absolute right-0 mt-2 bg-white text-black rounded-lg shadow-theme py-2 w-48 z-50">
+                  <Link href="/dashboard" className="block px-4 py-2">Dashboard</Link>
+                  <button
+                    onClick={() => signOut()} // Using signOut() from NextAuth.js to log the user out
+                    className="flex items-center gap-2 text-sm px-3 py-2 text-red-400 hover:text-red-500 rounded-md mt-2"
+                  >
+                    <LogOut size={16} />
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Login and Signup Buttons */}
+        {!session && (
+          <>
+            <PrimaryButton customClass="text-base font-semibold">
+              <Link href="/login">Login</Link>
+            </PrimaryButton>
+            <SecondaryButton customClass="text-base font-semibold">
+              <Link href="/register">Sign up</Link>
+            </SecondaryButton>
+          </>
+        )}
       </ul>
 
       {/* Mobile Hamburger */}
@@ -117,42 +153,6 @@ export const Navbar = () => {
           <line x1="4" x2="20" y1="6" y2="6" />
           <line x1="4" x2="20" y1="18" y2="18" />
         </svg>
-
-        {/* Dropdown Mobile Menu */}
-        {dropDownState && (
-          <ul className="z-10 -mt-6 gap-2 bg-white absolute right-[-40px] top-[-20px] flex min-w-[calc(108vw-1px)] md:min-w-[calc(65vw-1px)] min-h-[110vh] flex-col pt-6 md:pt-10 rounded-b-xl transition-all duration-300 ease-in-out">
-            <Link href="/" className="flex pl-4 item-center">
-              <Image src="/rental.png" alt="logo" width={72} height={56} />
-              <p className="text-2xl md:text-3xl font-bold lg:font-extrabold text-primary mt-5">
-                Rental<span className="text-secondary">House</span>
-              </p>
-            </Link>
-
-            <button
-              onClick={() => setDropDownState(false)}
-              className="absolute top-4 md:right-6 right-3 mr-5 md:mr-0 md:mt-10 text-AppPopColor bg-[var(--dropBg-color)] hover:text-white hover:bg-AppPopColor text-3xl border rounded-full py-1 px-3 cursor-pointer transition-all duration-300 mt-6"
-            >
-              &times;
-            </button>
-
-            {/* Mobile Menu Links */}
-            {menuItems.map(({ name, path }) => {
-              const isActive = pathname === path;
-              return (
-                <Link
-                  key={name}
-                  href={path}
-                  onClick={() => setDropDownState(false)}
-                  className={`cursor-pointer px-12 py-3 transition-all duration-500 ease-in-out font-semibold hover:bg-[var(--dropBg-color)] ${
-                    isActive ? "text-secondary" : "text-primary"
-                  }`}
-                >
-                  {name}
-                </Link>
-              );
-            })}
-          </ul>
-        )}
       </div>
     </nav>
   );

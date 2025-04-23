@@ -7,6 +7,7 @@ import Loader from '@/components/shared/Loader';
 import { useSession } from 'next-auth/react'; 
 import PrimaryButton from '@/components/shared/PrimaryButton';
 import SecondaryButton from '@/components/shared/SecondaryButton';
+import { useRouter } from 'next/navigation';
 
 interface ProfileData {
   name: string;
@@ -18,6 +19,7 @@ interface ProfileData {
 
 const ProfileCard = () => {
   const { data: session, status } = useSession();
+  const router = useRouter();
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -60,13 +62,14 @@ const ProfileCard = () => {
 
   // Handle Edit Profile and Change Password buttons
   const handleEditProfile = () => {
-    // Logic for editing profile
     console.log('Edit profile clicked');
+    router.push('/dashboard/profile/update-profile');
   };
 
   const handleChangePassword = () => {
     // Logic for changing password
     console.log('Change password clicked');
+    router.push('/dashboard/profile/change-password');
   };
 
   return (

@@ -10,45 +10,30 @@ interface FilterSectionProps {
 const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
   const [keywords, setKeywords] = useState("");
   const [propertyType, setPropertyType] = useState("");
-  const [city, setCity] = useState("");
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
+  const [minPrice, setMinPrice] = useState<number | ''>('');
+  const [maxPrice, setMaxPrice] = useState<number | ''>('');
   const [sortBy, setSortBy] = useState("");
-
-  const handleKeywordsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setKeywords(event.target.value);
-  };
-
-  const handlePropertyTypeChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setPropertyType(event.target.value);
-  };
-
-  const handleCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCity(event.target.value);
-  };
-
-  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortBy(event.target.value);
-  };
-
-  const handlePriceRangeChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = parseInt(event.target.value, 10);
-    const isMin = event.target.name === "minPrice";
-    setPriceRange(isMin ? [value, priceRange[1]] : [priceRange[0], value]);
-  };
+  const [beds, setBeds] = useState("");
+  const [baths, setBaths] = useState("");
 
   const applyFilters = () => {
     const filters: Record<string, any> = {};
-    if (keywords) filters.keywords = keywords;
-    if (propertyType) filters.propertyType = propertyType;
-    if (city) filters.city = city;
-    if (priceRange[0] > 0 || priceRange[1] < 1000000) {
-      filters.priceRange = priceRange;
+
+    if (keywords) filters.searchTerm = keywords;
+    if (propertyType) filters.type = propertyType;
+    if (minPrice !== '') filters.minPrice = minPrice;
+    if (maxPrice !== '') filters.maxPrice = maxPrice;
+
+    if (sortBy === "price-low-high") {
+      filters.sortBy = "price";
+      filters.sortOrder = "asc";
+    } else if (sortBy === "price-high-low") {
+      filters.sortBy = "price";
+      filters.sortOrder = "desc";
     }
-    if (sortBy) filters.sortBy = sortBy;
+
+    if (beds) filters.beds = beds;
+    if (baths) filters.baths = baths;
 
     onFilterChange(filters);
   };
@@ -61,13 +46,12 @@ const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
 
       {/* Keywords */}
       <div className="mb-3 lg:mb-6">
-        <label className="block text-gray-700 text-sm font-bold mb-2"></label>
         <input
           type="text"
           className="shadow bg-gray-50 rounded w-full p-3 lg:p-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           placeholder="Keywords"
           value={keywords}
-          onChange={handleKeywordsChange}
+          onChange={(e) => setKeywords(e.target.value)}
         />
       </div>
 
@@ -76,11 +60,9 @@ const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
         <select
           className="bg-gray-50 shadow rounded w-full p-3 lg:p-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           value={propertyType}
-          onChange={handlePropertyTypeChange}
+          onChange={(e) => setPropertyType(e.target.value)}
         >
-          <option value="" disabled>
-            Filter by Property Type
-          </option>
+          <option value="">Filter by Property Type</option>
           <option value="apartment">Apartment</option>
           <option value="house">House</option>
           <option value="villa">Villa</option>
@@ -88,42 +70,58 @@ const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
         </select>
       </div>
 
-      {/* City */}
-      <div className="mb-3 lg:mb-6">
-        <select
-          className="bg-gray-50 shadow rounded w-full p-3 lg:p-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          value={city}
-          onChange={handleCityChange}
-        >
-          <option value="" disabled>
-            Filter by City
-          </option>
-          <option value="new-york">New York</option>
-          <option value="london">London</option>
-          <option value="paris">Paris</option>
-          <option value="tokyo">Tokyo</option>
-        </select>
+      {/* Beds & Baths */}
+      <div className="mb-3 lg:mb-6 md:flex md:space-x-4">
+        <div className="w-full mb-3 md:mb-0">
+          <select
+            className="bg-gray-50 shadow rounded w-full p-3 lg:p-4 text-gray-700 focus:outline-none"
+            value={beds}
+            onChange={(e) => setBeds(e.target.value)}
+          >
+            <option value="">Beds</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4+</option>
+          </select>
+        </div>
+        <div className="w-full">
+          <select
+            className="bg-gray-50 shadow rounded w-full p-3 lg:p-4 text-gray-700 focus:outline-none"
+            value={baths}
+            onChange={(e) => setBaths(e.target.value)}
+          >
+            <option value="">Baths</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3+</option>
+          </select>
+        </div>
       </div>
 
-      {/* Price Range */}
+      {/* Min Price and Max Price */}
       <div className="mb-3 lg:mb-6">
         <div className="flex items-center">
           <input
             type="number"
-            className="bg-gray-50 shadow rounded w-1/2 p-3 lg:p-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
+            className="bg-gray-50 shadow rounded w-1/2 p-3 lg:p-4 text-gray-700 focus:outline-none focus:shadow-outline mr-2"
             placeholder="Min Price"
             name="minPrice"
-            value={priceRange[0]}
-            onChange={handlePriceRangeChange}
+            value={minPrice ?? ''}
+            onChange={(e) =>
+              setMinPrice(e.target.value ? parseInt(e.target.value) : '')
+            }
           />
           <span className="mx-2">-</span>
           <input
             type="number"
-            className="bg-gray-50 shadow rounded w-1/2 p-3 lg:p-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="bg-gray-50 shadow rounded w-1/2 p-3 lg:p-4 text-gray-700 focus:outline-none focus:shadow-outline"
             placeholder="Max Price"
             name="maxPrice"
-            value={priceRange[1]}
-            onChange={handlePriceRangeChange}
+            value={maxPrice ?? ''}
+            onChange={(e) =>
+              setMaxPrice(e.target.value ? parseInt(e.target.value) : '')
+            }
           />
         </div>
       </div>
@@ -131,25 +129,20 @@ const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
       {/* Sort By */}
       <div className="mb-6">
         <select
-          className="bg-gray-50 shadow rounded w-full p-3 lg:p-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="bg-gray-50 shadow rounded w-full p-3 lg:p-4 text-gray-700 focus:outline-none"
           value={sortBy}
-          onChange={handleSortChange}
+          onChange={(e) => setSortBy(e.target.value)}
         >
-          <option value="" disabled>
-            Select Sorting
-          </option>
+          <option value="">Select Sorting</option>
           <option value="price-low-high">Price: Low to High</option>
           <option value="price-high-low">Price: High to Low</option>
         </select>
       </div>
 
       <div className="flex justify-center items-center">
-        {/* <button type="button"> */}
-          <SecondaryButton  onClick={applyFilters} customClass="w-full">
-            {" "}
-            Filter By Features
-          </SecondaryButton>
-        {/* </button> */}
+        <SecondaryButton onClick={applyFilters} customClass="w-full">
+          Filter By Features
+        </SecondaryButton>
       </div>
     </div>
   );

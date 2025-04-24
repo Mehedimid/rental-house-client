@@ -18,10 +18,10 @@ function Footer() {
         >
           <h2 className="text-xl font-bold mb-4 text-white">Services</h2>
           <ul className="space-y-2">
-            <li className="hover:text-green-600 transition">Property Selling</li>
-            <li className="hover:text-green-600 transition">Property Buying</li>
-            <li className="hover:text-green-600 transition">Architectural</li>
-            <li className="hover:text-green-600 transition">Advising</li>
+            <li className="hover:text-gray-100 transition">Property Selling</li>
+            <li className="hover:text-gray-100 transition">Property Buying</li>
+            <li className="hover:text-gray-100 transition">Architectural</li>
+            <li className="hover:text-gray-100 transition">Advising</li>
           </ul>
         </div>
 
@@ -33,10 +33,10 @@ function Footer() {
         >
           <h2 className="text-xl font-bold mb-4 text-white">Company</h2>
           <ul className="space-y-2">
-            <li className="hover:text-green-600 transition">About us: Rental House Ltd.</li>
-            <li className="hover:text-green-600 transition">Contact: 01911309454</li>
-            <li className="hover:text-green-600 transition">Jobs: www.RentalHouse.com</li>
-            <li className="hover:text-green-600 transition">Press Kit</li>
+            <li className="hover:text-gray-100 transition">Contact: 01911309454</li>
+            <li className="hover:text-gray-100 transition">About us: Rental House Ltd.</li>
+            <li className="hover:text-gray-100 transition">Jobs: www.RentalHouse.com</li>
+            <li className="hover:text-gray-100 transition">Press Kit</li>
           </ul>
         </div>
 
@@ -48,9 +48,9 @@ function Footer() {
         >
           <h2 className="text-xl font-bold mb-4 text-white">Legal</h2>
           <ul className="space-y-2">
-            <li className="hover:text-green-600 transition">Terms of Use</li>
-            <li className="hover:text-green-600 transition">Privacy Policy</li>
-            <li className="hover:text-green-600 transition">Cookie Policy</li>
+            <li className="hover:text-gray-100 transition">Terms of Use</li>
+            <li className="hover:text-gray-100 transition">Privacy Policy</li>
+            <li className="hover:text-gray-100 transition">Cookie Policy</li>
           </ul>
         </div>
       </div>
@@ -61,7 +61,7 @@ function Footer() {
           <Image src="/rental.png" alt="logo" width={82} height={56}/>
           <div>
             <h3 className="text-lg font-bold bg-primary text-transparent bg-clip-text">
-              Rental House Ltd.
+              Rental <span className="text-secondary">House</span> Ltd.
             </h3>
             <p className="text-sm text-gray-30">Providing reliable source since 2025</p>
           </div>

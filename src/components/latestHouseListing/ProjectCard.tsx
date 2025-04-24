@@ -22,12 +22,12 @@ const ProjectCard = ({ slide }: { slide: Slide })  => {
   } = slide;
 
   return (
-    <div className="bg-white shadow-md rounded-xl overflow-hidden w-full max-w-sm mx-auto mb-16">
+    <div className="bg-white shadow-lg shadow-gray-200 rounded-xl overflow-hidden w-full max-w-sm mx-auto mb-16 hover:scale-110 duration-500">
       <img src={image} alt={title} className="w-full h-56 object-cover" />
 
-      <div className="p-4">
+      <div className="p-4 ">
         {/* Status and Price */}
-        <div className="flex justify-between items-center mb-2">
+        <div className="flex justify-between items-center mb-2 ">
           <span className="bg-red-600 text-white text-xs font-medium px-3 py-1 rounded-full">
             {status}
           </span>

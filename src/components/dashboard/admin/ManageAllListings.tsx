@@ -7,8 +7,8 @@ import SecondaryButton from "@/components/shared/SecondaryButton";
 import PrimaryButton from "@/components/shared/PrimaryButton";
 
 // Cloudinary config
-const CLOUDINARY_UPLOAD_PRESET = "your_upload_preset";
-const CLOUDINARY_CLOUD_NAME = "your_cloud_name";
+const CLOUDINARY_UPLOAD_PRESET = "tahmid123";
+const CLOUDINARY_CLOUD_NAME = "dfvvoq4ud";
 
 type ListingType = "apartment" | "house" | "villa" | "townhouse";
 type StatusType = "available" | "not available";

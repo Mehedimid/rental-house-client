@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import React, { useState } from 'react';
 
@@ -54,19 +54,30 @@ export default function FAQ() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-center mb-10">Frequently Asked Questions</h1>
+      <h1 className="text-4xl font-bold text-center mb-10 text-gray-900 dark:text-white">
+        Frequently Asked Questions
+      </h1>
       <div className="space-y-4">
         {faqData.map((faq, index) => (
-          <div key={index} className="border-b pb-2">
+          <div
+            key={index}
+            className="border-b border-gray-300 dark:border-gray-700 pb-2"
+          >
             <button
               onClick={() => toggleFAQ(index)}
               className="w-full text-left flex justify-between items-center py-3 focus:outline-none"
             >
-              <h3 className="text-xl font-semibold text-gray-800">{faq.question}</h3>
-              <span className="text-xl">{openIndex === index ? '−' : '+'}</span>
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                {faq.question}
+              </h3>
+              <span className="text-xl text-gray-600 dark:text-gray-300">
+                {openIndex === index ? '−' : '+'}
+              </span>
             </button>
             {openIndex === index && (
-              <p className="text-gray-600 mt-2 transition-all duration-300">{faq.answer}</p>
+              <p className="text-gray-600 dark:text-gray-400 mt-2 transition-all duration-300">
+                {faq.answer}
+              </p>
             )}
           </div>
         ))}

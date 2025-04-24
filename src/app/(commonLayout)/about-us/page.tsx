@@ -3,6 +3,7 @@
 import Testimonials from "@/components/aboutUs/Testimonials";
 import Marquee from "@/components/aboutUs/Marquee";
 import React, { useEffect } from "react";
+import Hero from "@/components/shared/Hero";
 
 
 const AboutPage = () => {
@@ -15,16 +16,11 @@ const AboutPage = () => {
 
   return (
     <div className="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100">
-      {/* Hero Section */}
-      <section className="bg-gray-100 dark:bg-gray-800 py-20">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold text-black dark:text-white mb-4">About Us</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
-            Discover our journey and commitment to providing the best rental solutions.
-          </p>
-        </div>
-      </section>
 
+    {/* Hero Section */}
+
+    <Hero img='https://i.ibb.co.com/TDbMJ1Jz/house1.jpg' title="About US"/>
+    
       {/* Our Story */}
       <section className="py-20">
         <div className="max-w-5xl mx-auto px-4">

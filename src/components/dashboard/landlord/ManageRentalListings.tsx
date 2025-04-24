@@ -222,7 +222,7 @@ const ManageRentalListings = () => {
                 <td className="border border-gray-200 p-3 text-black text-center">
                   <Button
                     variant="outline"
-                    className="rounded-full text-white"
+                    className="rounded-full bg-black text-white"
                     onClick={() => handleViewListingDetails(listing._id!)}
                   >
                     View Details

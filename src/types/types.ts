@@ -60,10 +60,17 @@ export interface IListingDetails {
   yearBuilt: Date;
 }
 
+export interface ILandlord {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  // any other fields like imageUrl or role can go here too
+}
 
 export interface IListing {
   _id?: string;
-  landlord: string;
+  landlord: ILandlord;
   images?: IListingImages;
   flatPlan?: string;
   title: string;

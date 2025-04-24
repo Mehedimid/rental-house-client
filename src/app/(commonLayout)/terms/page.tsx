@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Head from 'next/head';
+import Hero from '@/components/shared/Hero';
 
 const TermsOfService = () => {
   return (
@@ -16,24 +17,8 @@ const TermsOfService = () => {
 
       <main className="bg-white text-gray-800 dark:bg-gray-900 dark:text-white transition-colors duration-300">
         {/* Hero Section */}
-        <div className="relative w-full h-[250px] md:h-[300px] lg:h-[400px]">
-          {/* Background Image */}
-          <img
-            src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80"
-            alt="Terms Hero"
-            className="w-full h-full object-cover absolute inset-0 z-0"
-          />
-
-          {/* Overlay with gradient for better dark mode support */}
-          <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/50 to-black/20" />
-
-          {/* Title Text */}
-          <div className="absolute inset-0 z-20 flex items-center justify-center px-4">
-            <h1 className="text-white text-2xl md:text-4xl font-bold text-center drop-shadow-lg">
-              Terms & Conditions
-            </h1>
-          </div>
-        </div>
+        <Hero img='https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80' title="Terms & Conditions"/>
+       
 
         {/* Content Section */}
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-16 space-y-12">

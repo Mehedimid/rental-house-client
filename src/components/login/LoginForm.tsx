@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -26,6 +27,13 @@ const LoginForm = () => {
     if (result?.error) {
       setError("Invalid email or password");
     } else {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "successfully logged in",
+        showConfirmButton: false,
+        timer: 1500
+      });
       router.push("/"); 
     }
   };

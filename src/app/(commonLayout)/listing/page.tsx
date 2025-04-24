@@ -1,15 +1,41 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import PropertyCard from "@/components/cards/PropertyCard";
 import useListing from "@/components/hooks/listing/useLIsting";
 import Loader from "@/components/shared/Loader";
 import SectionHeader from "@/components/shared/SectionHeader";
 import FilterBox from "@/components/tenant/FilterBox";
+import { useSearchParams } from "next/navigation";
 
 const PropertyListingPage = () => {
-  const [filters, setFilters] = React.useState({ page: 1, limit: 6 });
+  const searchParams = useSearchParams();
+  const searchTerm = searchParams.get("searchTerm") || "";
+  const type = searchParams.get("type") || "";
+  const beds = searchParams.get("beds") || "";
+  const baths = searchParams.get("baths") || "";
+  const minPrice = searchParams.get("minPrice");
+  const maxPrice = searchParams.get("maxPrice");
+  const sortBy = searchParams.get("sortBy");
+  const sortOrder = searchParams.get("sortOrder");
+  
+  const initialFilters = {
+    searchTerm,
+    type,
+    beds,
+    baths,
+    minPrice: minPrice ? parseInt(minPrice) : undefined,
+    maxPrice: maxPrice ? parseInt(maxPrice) : undefined,
+    sortBy,
+    sortOrder,
+    page: 1,
+    limit: 6,
+  };
+  
+  const [filters, setFilters] = useState<any>(initialFilters);
+  
+  // const [filters, setFilters] = React.useState({ page: 1, limit: 6 });
   const [listings, isPending] = useListing(filters);
 
   const properties = listings?.data?.data ?? [];
@@ -20,7 +46,7 @@ const PropertyListingPage = () => {
   };
 
   const handlePageChange = (newPage: number) => {
-    setFilters((prevFilters) => ({
+    setFilters((prevFilters: any) => ({
       ...prevFilters,
       page: newPage,
     }));

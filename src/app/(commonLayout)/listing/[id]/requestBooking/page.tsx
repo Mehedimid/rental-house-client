@@ -63,11 +63,9 @@ const RequestBooking = ({ params }: any) => {
       console.log(data.data.data);
       if (data?.data?.data) {
         Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Your work has been saved",
-          showConfirmButton: false,
-          timer: 1500,
+          title: "Good job!",
+          text: "Booking Request Successfull!",
+          icon: "success"
         });
       }
 

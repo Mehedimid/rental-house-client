@@ -12,7 +12,7 @@ const RequestRent = () => {
 
   return (
     <div>
-      <h1 className="text-center font-bold text-2xl lg:text-3xl my-5">My Rental Requests</h1>
+      <h1 className="text-left font-bold text-2xl lg:text-3xl my-5">My Rental Requests</h1>
       <ManageApplyTable />
     </div>
   );

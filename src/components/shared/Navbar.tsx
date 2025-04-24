@@ -48,6 +48,7 @@ if (scrollBtn) {
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about-us" },
     { name: "Listings", path: "/listing" },
+    ...(session?.user?.role === "landlord" ? [{ name: "Add Listing", path: "/dashboard/landlord/add-listing" }] : []),
     { name: "FAQ", path: "/faq" },
     { name: "Terms & Conditions", path: "/terms" },
     { name: "Contact", path: "/contact" },

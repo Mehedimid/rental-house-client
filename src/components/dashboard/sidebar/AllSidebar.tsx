@@ -46,6 +46,7 @@ const AdminSidebar = () => {
 
   const landlordLinks = [
     { label: "Dashboard Overview", href: "/dashboard/landlord" },
+    { label: "Add New Listing", href: "/dashboard/landlord/add-listing" },
     { label: "My Listings", href: "/dashboard/landlord/rental-listings" },
     { label: "My Rentals", href: "/dashboard/landlord/rental-requests" },
   ];

@@ -183,7 +183,10 @@ const UpdateProfileForm = () => {
 
           <div className="text-center text-sm mt-4">
             Want to go back?{" "}
-            <Link href="/dashboard" className="underline underline-offset-4 text-secondary">
+            <Link
+              href="/dashboard"
+              className="underline underline-offset-4 text-secondary"
+            >
               Dashboard
             </Link>
           </div>

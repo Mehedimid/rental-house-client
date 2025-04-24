@@ -1,332 +1,101 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import {
-  Bar,
-  BarChart,
-  Pie,
-  PieChart,
-  LineChart,
-  Line,
-  ResponsiveContainer,
-  Tooltip,
-  Cell,
-  XAxis,
-  YAxis,
-} from "recharts";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import Loader from "@/components/shared/Loader";
 
-// Pie Chart Data (Course Completion Status)
-const pieData = [
-  { name: "Completed", value: 8 },
-  { name: "In Progress", value: 4 },
-  { name: "Pending", value: 3 },
-];
+interface IBooking {
+  _id: string;
+  bookingStatus: "accepted" | "rejected" | "cancelled" | "pending";
+  paymentStatus: boolean;
+  createdAt?: string;
+  listing: {
+    title: string;
+    address: string;
+  };
+}
 
-const COLORS = ["#4CAF50", "#FF9800", "#F44336"];
+const TenantOverview = () => {
+  const { data: session, status } = useSession();
+  const [bookings, setBookings] = useState<IBooking[]>([]);
+  const [loading, setLoading] = useState(false);
 
-// Bar Chart Data (House Rent Spent Over Time)
-const barData = [
-  { name: 2021, cost: 20000 },
-  { name: 2022, cost: 30000 },
-  { name: 2023, cost: 40000 },
-  { name: 2024, cost: 60000 },
-  { name: 2025, cost: 50000 },
-];
-
-// Line Chart Data (Costing Progress)
-const progressData = [
-  { year: 2021, progress: 30 },
-  { year: 2022, progress: 45 },
-  { year: 2023, progress: 60 },
-  { year: 2024, progress: 80 },
-  { year: 2025, progress: 95 },
-];
-
-// New Feature: Room decoration
-const categoryData = [
-  { name: "Furnished room", value: 5 },
-  { name: "Large Corridor", value: 3 },
-  { name: "Gym", value: 4 },
-];
-
-// New Feature: Weekly Study Hours
-const loadShedingHoursData = [
-  { day: "Mon", hours: 2 },
-  { day: "Tue", hours: 3 },
-  { day: "wed", hours: 4 },
-  { day: "Thu", hours: 2 },
-  { day: "Fri", hours: 5 },
-  { day: "Sat", hours: 1 },
-  { day: "Sun", hours: 3 },
-];
-
-export default function TenantDashboard() {
-  const [houseRent, setHouseRent] = useState<any[]>([]);
-  const [needHouse, setNeedHouse] = useState<any[]>([]);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       // const user = await getCurrentUser();
-  //       const currentUser: {
-  //         _id: number
-  //         name: string;
-  //         email: string;
-  //         photoURL: string;
-          
-  //       } = {
-  //         _id:1,
-  //         name: "Admin Name",
-  //         email: "admin@example.com",
-  //         photoURL: "/default-avatar.png",
-          
-  //       };
-  //       // const { data: allUserData } = await getAllUser();
-  //       // const currentUser = allUserData?.find(
-  //       //   (singleUser: TGetAllUsers) => singleUser?.email === user?.email
-  //       // );
-
-  //       // console.log(currentUser);
-  //       if (currentUser?._id) {
-  //         const [houseRent, needHouse] = await Promise.all([
-  //           // tenantRentHouse(currentUser?._id),
-  //         ]);
-
-  //         setHouseRent(houseRent?.data);
-  //         setNeedHouse(needHouse?.data);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     } 
-  //   };
-
-  //   fetchData();
-  // }, []);
+  const tenantId = session?.user.id;
+  const token = session?.accessToken;
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchBookings = async () => {
       try {
-        const currentUser = {
-          _id: 1,
-          name: "Demo Tenant",
-          email: "tenant@example.com",
-          photoURL: "/default-avatar.png",
-        };
-  
-        // ✅ Simulate dummy rent data
-        const dummyHouseRent = [
+        setLoading(true);
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/booking-request/tenant-bookings/${tenantId}`,
           {
-            rentId: { spent: 10000 },
-          },
-          {
-            rentId: { spent: 15000 },
-          },
-        ];
-  
-        const dummyNeedHouse = [
-          {
-            rentId: { spentRange: 5000 },
-          },
-          {
-            rentId: { spentRange: 7000 },
-          },
-        ];
-  
-        if (currentUser?._id) {
-          // Simulating async fetch with setTimeout
-          setTimeout(() => {
-            setHouseRent(dummyHouseRent);
-            setNeedHouse(dummyNeedHouse);
-          }, 500); // small delay to simulate real API
-        }
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setBookings(response.data.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching tenant bookings:", error);
+      } finally {
+        setLoading(false);
       }
     };
-  
-    fetchData();
-  }, []);
-  
 
+    if (tenantId && token) fetchBookings();
+  }, [tenantId, token]);
 
-  const totalHouseRent = houseRent.reduce((sum, rent) => {
-    return sum + Number(rent.rentId.spent);
-  }, 0);
-  const totalHouseRentSpent = needHouse.reduce((sum, rent) => {
-    return sum + Number(rent.rentId.spentRange);
-  }, 0);
+  if (status === "loading") return <div>Loading session...</div>;
+  if (status === "unauthenticated") return <div>Please log in to view your dashboard.</div>;
+  if (loading) return <Loader />;
 
-
-
-
-
+  const total = bookings.length;
+  const accepted = bookings.filter((b) => b.bookingStatus === "accepted").length;
+  const rejected = bookings.filter((b) => b.bookingStatus === "rejected").length;
+  const paid = bookings.filter((b) => b.paymentStatus).length;
+  const recent = [...bookings].sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()).slice(0, 3);
 
   return (
-    <div className="p-6 ">
-      <h2 className="text-4xl font-bold  my-8 text-center">
-        Tenant Dashboard
-      </h2>
+    <div className="space-y-6 my-5">
+      <h2 className="text-2xl font-semibold lg:text-3xl mb-8">Tenant Dashboard</h2>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <Card className="bg-white shadow-theme">
-          <CardHeader>
-            <CardTitle className="text-xl text-gray-700">
-              List of Rent
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-4xl font-bold text-green-600">{houseRent?.length + needHouse?.length}</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white shadow-theme">
-          <CardHeader>
-            <CardTitle className="text-xl text-gray-700">
-              Total Spent
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-4xl font-bold text-blue-600">{totalHouseRent+totalHouseRentSpent} BDT</p>
-          </CardContent>
-        </Card>
-
-        
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="bg-white p-4 shadow rounded-lg">
+          <h4 className="text-black">Total Requests</h4>
+          <p className="text-black text-xl font-bold">{total}</p>
+        </div>
+        <div className="bg-white p-4 shadow rounded-lg">
+          <h4 className="text-black">Accepted</h4>
+          <p className="text-black text-xl font-bold">{accepted}</p>
+        </div>
+        <div className="bg-white p-4 shadow rounded-lg">
+          <h4 className="text-black">Rejected</h4>
+          <p className="text-black text-xl font-bold">{rejected}</p>
+        </div>
+        <div className="bg-white p-4 shadow rounded-lg">
+          <h4 className="text-black">Paid</h4>
+          <p className="text-black text-xl font-bold">{paid}</p>
+        </div>
       </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Pie Chart */}
-        <Card className="bg-white shadow-theme">
-          <CardHeader>
-            <CardTitle className="text-xl text-gray-700">
-              House Rent Status
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={pieData}
-                  dataKey="value"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={100}
-                  label
-                >
-                  {pieData.map((_, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Bar Chart */}
-        <Card className="bg-white shadow-theme">
-          <CardHeader>
-            <CardTitle className="text-xl text-gray-700">
-              Rent Increase Over Time
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={barData}>
-                <XAxis dataKey="name" stroke="#8884d8" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="cost" fill="#F44336" barSize={40} />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Line Chart */}
-      <div className="mt-8">
-        <Card className="bg-white shadow-theme">
-          <CardHeader>
-            <CardTitle className="text-xl text-gray-700">
-              Yearly Costing Increases
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={progressData}>
-                <XAxis dataKey="month" stroke="#8884d8" />
-                <YAxis />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="progress"
-                  stroke="#FF5722"
-                  strokeWidth={3}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Course Categories Stats */}
-      <div className="mt-8">
-        <Card className="bg-white shadow-theme">
-          <CardHeader>
-            <CardTitle className="text-xl text-gray-700">
-              House Facility
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={categoryData}
-                  dataKey="value"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={100}
-                  label
-                >
-                  {categoryData.map((_, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Weekly Study Hours Bar Chart */}
-      <div className="mt-8">
-        <Card className="bg-white shadow-theme">
-          <CardHeader>
-            <CardTitle className="text-xl text-gray-700">
-              Weekly Loadsheding Hours
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={loadShedingHoursData}>
-                <XAxis dataKey="day" stroke="#8884d8" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="hours" fill="#007BFF" barSize={40} />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
+      <div>
+        <h3 className="text-xl font-semibold mb-2">Recent Requests</h3>
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {recent.map((b) => (
+            <li key={b._id} className="bg-white p-4 rounded shadow">
+              <p className="text-black font-semibold">{b.listing?.title}</p>
+              <p className="text-gray-600 text-sm mb-2">{b.listing?.address}</p>
+              <p className="text-black mb-1">Status: <strong>{b.bookingStatus}</strong></p>
+              <p className="text-black mb-1">Paid: <strong>{b.paymentStatus ? "Yes" : "No"}</strong></p>
+              <p className="text-black text-sm">Requested: {new Date(b.createdAt!).toLocaleDateString()}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
-}
+};
+
+export default TenantOverview;

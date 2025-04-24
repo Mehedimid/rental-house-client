@@ -33,7 +33,7 @@ const AdminSidebar = () => {
   const role = session?.user?.role;
 
   const adminLinks = [
-    { label: "Dashboard Overview", href: "/dashboard/admin/overview" },
+    { label: "Dashboard Overview", href: "/dashboard/admin" },
     { label: "All Users", href: "/dashboard/admin/users" },
     { label: "All Listings", href: "/dashboard/admin/listings" },
   ];

@@ -55,15 +55,18 @@ const RentedHouse = () => {
     }
   };
 
-  if (status === "loading") return <div>Loading session...</div>;
-  if (status === "unauthenticated") return <div>Please log in to see your bookings.</div>;
-  if (loading) return <Loader />;
-  if (error) return <div>{error}</div>;
-
-  // Filter bookings: Exclude bookings with 'pending' status
   const filteredBookings = bookingData.filter(
     (booking) => booking.bookingStatus !== "pending"
   );
+
+  if (status === "loading") return <Loader/>;
+  if (status === "unauthenticated") return <div>Please log in to see your bookings.</div>;
+  if (loading) return <Loader />;
+  if (error) return <div>{error}</div>;
+  if (filteredBookings.length === 0) return <div className="text-xl font bold text center my-20">No Accepted Request found</div>;
+
+  // Filter bookings: Exclude bookings with 'pending' status
+  
 
   return (
     <div>

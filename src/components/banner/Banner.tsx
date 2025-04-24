@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -11,7 +11,7 @@ import React from "react";
 import SecondaryButton from "../shared/SecondaryButton";
 
 const Banner = () => {
-  const router = useRouter(); 
+  const router = useRouter();
   const slides = [
     "https://images.pexels.com/photos/271743/pexels-photo-271743.jpeg",
     "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
@@ -97,15 +97,17 @@ const Banner = () => {
           />
 
           {/* Search Button */}
-          <button
-            className={`${
-              keywords.trim() === "" ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            onClick={handleSearch}
-            disabled={keywords.trim() === ""}
-          >
-            <SecondaryButton>Search Property</SecondaryButton>
-          </button>
+          <div>
+            <SecondaryButton
+              className={`${
+                keywords.trim() === "" ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              onClick={handleSearch}
+              disabled={keywords.trim() === ""}
+            >
+              Search Property
+            </SecondaryButton>
+          </div>
         </div>
       </div>
 

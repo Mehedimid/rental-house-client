@@ -28,6 +28,7 @@ const PropertyDetails = ({ params }: any) => {
   const user = session?.user;
   // if (status === "loading") return <Loader />;
   // if (!session) return <div>You need to sign in</div>;
+  console.log(user?.role);
 
   const formattedDate = new Date(
     property?.details?.yearBuilt

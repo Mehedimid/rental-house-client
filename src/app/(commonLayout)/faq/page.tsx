@@ -1,5 +1,6 @@
 "use client";
 
+import Hero from '@/components/shared/Hero';
 import React, { useState } from 'react';
 
 const faqData = [
@@ -53,6 +54,9 @@ export default function FAQ() {
   };
 
   return (
+  <>
+   {/* Hero Section */}
+<Hero img='https://i.ibb.co.com/B2t7HCvm/house4.jpg' title="FAQ"/>
     <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold text-center mb-10 text-gray-900 dark:text-white">
         Frequently Asked Questions
@@ -83,5 +87,6 @@ export default function FAQ() {
         ))}
       </div>
     </div>
+    </>
   );
 }

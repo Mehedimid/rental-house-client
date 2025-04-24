@@ -17,7 +17,7 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
 
   const { data: session } = useSession(); // Get session data
-
+console.log(session?.user?.imageUrl, "user img data")
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 0);
@@ -53,6 +53,8 @@ if (scrollBtn) {
     { name: "Contact", path: "/contact" },
   ];
 
+ 
+
   return (
     <nav
       className={`section-padding-x fixed md:fixed lg:absolute z-30 w-full flex items-center justify-between bg-[#b2b2f1] pt-3 lg:container px-3 text-white left-1/2 transform -translate-x-1/2 ${scrolled ? "md:bg-[#b2b2f1] md:py-2" : "bg-transparent"
@@ -81,6 +83,7 @@ if (scrollBtn) {
             >
               <Link href={path}>{name}</Link>
             </li>
+            
           );
         })}
 
@@ -94,16 +97,16 @@ if (scrollBtn) {
                 aria-label="User Menu"
               >
                 <Image
-                  src={session.user.imageUrl || "/default-avatar.jpg"}
-                  alt="User Avatar"
+                  src={session?.user?.imageUrl || "/default-avatar.jpg"}
+                  alt="profile"
                   width={40}
                   height={40}
-                  className="rounded-full"
+                  className="rounded-full border border-primary"
                 />
               </button>
               {/* Dropdown Menu */}
               {dropDownState && (
-                <div className="absolute right-0 mt-2 bg-white text-black rounded-lg shadow-theme py-2 w-48 z-50">
+                <div className="absolute right-0 mt-2 bg-white text-primary rounded-lg shadow-theme py-2 w-48 z-50">
                   <Link href="/dashboard" className="block px-4 py-2">Dashboard</Link>
                   <button
                     onClick={() => signOut()} // Using signOut() from NextAuth.js to log the user out
@@ -120,13 +123,14 @@ if (scrollBtn) {
 
         {/* Login and Signup Buttons */}
         {!session && (
-          <>
+          <><Link href="/login">
             <PrimaryButton customClass="text-base font-semibold">
-              <Link href="/login">Login</Link>
-            </PrimaryButton>
+              Login
+            </PrimaryButton></Link>
+            <Link href="/register">
             <SecondaryButton customClass="text-base font-semibold">
-              <Link href="/register">Sign up</Link>
-            </SecondaryButton>
+              Sign up
+            </SecondaryButton></Link>
           </>
         )}
       </ul>

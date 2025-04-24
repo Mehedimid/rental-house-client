@@ -1,5 +1,6 @@
 "use client";
 import PropertyCard from "@/components/cards/PropertyCard";
+import Hero from "@/components/shared/Hero";
 import SectionHeader from "@/components/shared/SectionHeader";
 import FilterBox from "@/components/tenant/FilterBox";
 import React from "react";
@@ -199,6 +200,7 @@ const PropertyListingPage = () => {
 
   return (
     <div className=" min-h-screen pb-8">
+      <Hero img='https://i.ibb.co.com/xSYK2B1J/house2.jpg' title="Find Your House"/>
       <div className="container mx-auto w-7/8">
       <SectionHeader subtitle="Rent Your House" title="Listing"></SectionHeader>
         <div className="flex flex-col lg:flex-row">

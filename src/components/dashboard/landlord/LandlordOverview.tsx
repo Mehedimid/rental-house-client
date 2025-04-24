@@ -8,13 +8,7 @@ import Image from "next/image";
 
 interface IListing {
   _id: string;
-  landlord: {
-    _id: string;
-    name: string;
-    email: string;
-    phone: string;
-    role: string;
-  };
+  landlord: string;
   title: string;
   address: string;
   price: number;
@@ -61,11 +55,11 @@ const LandlordOverview = () => {
         );
         
         // Filter listings by the current landlordId
-        const landlordListings = response.data.data.filter((listing: IListing) => listing.landlord._id === LandlordId);
+        const landlordListings = response.data.data.filter((listing: IListing) => listing.landlord === LandlordId);
 
         // Sort listings by landlordId (though it's already filtered, it's good practice if multiple landlords are considered)
         const sortedListings = landlordListings.sort((a: IListing, b: IListing) => 
-            a.landlord._id.localeCompare(b.landlord._id)
+            a.landlord.localeCompare(b.landlord)
           );
 
         setListings(sortedListings);

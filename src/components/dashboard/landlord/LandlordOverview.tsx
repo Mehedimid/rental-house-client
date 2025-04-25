@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -18,7 +19,7 @@ type ILandlord = string | IPopulatedLandlord;
 
 interface IListing {
   _id: string;
-  landlord: ILandlord;
+  landlord: any;
   title: string;
   address: string;
   price: number;
@@ -44,7 +45,9 @@ interface IListing {
 }
 
 // Type guard to check if landlord is populated
-function isPopulatedLandlord(landlord: ILandlord): landlord is IPopulatedLandlord {
+function isPopulatedLandlord(
+  landlord: ILandlord
+): landlord is IPopulatedLandlord {
   return typeof landlord === "object" && landlord !== null && "_id" in landlord;
 }
 
@@ -57,11 +60,12 @@ const LandlordOverview = () => {
   const token = session?.accessToken;
 
   useEffect(() => {
+    console.log("landlordId:", landlordId);
     const fetchListings = async () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/listings/`,
+          `${process.env.NEXT_PUBLIC_API_URL}/listings/landlord/${landlordId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -69,17 +73,10 @@ const LandlordOverview = () => {
           }
         );
 
-        const allListings: IListing[] = response.data.data;
-
-        // Filter only listings owned by this landlord
-        const landlordListings = allListings.filter(
-          (listing) =>
-            isPopulatedLandlord(listing.landlord) &&
-            listing.landlord._id === landlordId
-        );
+        const landlordListings: any = response.data.data;
 
         // Optional: Sort by landlord _id
-        const sortedListings = landlordListings.sort((a, b) =>
+        const sortedListings = landlordListings.sort((a:any, b:any) =>
           isPopulatedLandlord(a.landlord) && isPopulatedLandlord(b.landlord)
             ? a.landlord._id.localeCompare(b.landlord._id)
             : 0
@@ -98,7 +95,8 @@ const LandlordOverview = () => {
   }, [landlordId, token]);
 
   if (status === "loading") return <div>Loading session...</div>;
-  if (status === "unauthenticated") return <div>Please log in to view your dashboard.</div>;
+  if (status === "unauthenticated")
+    return <div>Please log in to view your dashboard.</div>;
   if (loading) return <Loader />;
 
   const total = listings.length;
@@ -106,13 +104,16 @@ const LandlordOverview = () => {
   const rented = listings.filter((l) => l.status === "rented").length;
   const recent = [...listings]
     .sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     )
     .slice(0, 3);
 
   return (
     <div className="space-y-6 my-5">
-      <h2 className="text-2xl font-semibold lg:text-3xl mb-8">Landlord Dashboard</h2>
+      <h2 className="text-2xl font-semibold lg:text-3xl mb-8">
+        Landlord Dashboard
+      </h2>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white p-4 shadow rounded-lg">

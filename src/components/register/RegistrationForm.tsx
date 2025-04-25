@@ -6,6 +6,7 @@ import SecondaryButton from "@/components/shared/SecondaryButton";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Loader from "../shared/Loader";
+import Swal from "sweetalert2";
 
 const RegistrationForm = () => {
   const router = useRouter();
@@ -49,8 +50,13 @@ const RegistrationForm = () => {
       );
 
       if (response.data?.success) {
-        alert("Registration successful! Please login.");
-        console.log(response)
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "successfully registered",
+        showConfirmButton: false,
+        timer: 1500
+      });
         router.push("/login");
       } else {
         alert("Registration failed.");

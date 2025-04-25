@@ -7,6 +7,7 @@ import Faq from "../shared/Faq";
 
 
 const Home = () => {
+
   return (
     <div>
       <Banner/>

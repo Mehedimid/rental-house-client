@@ -1,123 +1,189 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
+import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import SecondaryButton from "@/components/shared/SecondaryButton";
 import Image from "next/image";
+import { use, useEffect, useState } from "react";
+import useSingleListing from "@/components/hooks/listing/useSingleListing";
+import { useSession } from "next-auth/react";
+import useAxiosPublic from "@/components/hooks/listing/useAxiosPublic";
+import Loader from "@/components/shared/Loader";
 
-const RequestBooking = () => {
+const RequestBooking = ({ params }: any) => {
+  const axiosPublic = useAxiosPublic();
   const router = useRouter();
+  const { id }: any = use(params);
+  const [data, isPending] = useSingleListing(id);
 
-  const { register, handleSubmit, reset } = useForm({
-    defaultValues: {
-      fullName: "John Doe",
-      phone: "017XXXXXXXX",
-      email: "johndoe@email.com",
-      message: "",
-      familyMembers: "2",
-      children: "1",
-    },
+  const listing = data?.data;
+  const { data: session, status } = useSession();
+  const user = session?.user;
+
+  const [formData, setFormData] = useState<any>(null);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: formData || {},
   });
+
+  useEffect(() => {
+    if (listing && user) {
+      const newFormData = {
+        tenant: user?.id || "68067216b461d20fc2aa0479",
+        landlord: listing?.landlord?._id,
+        listing: id,
+        details: {
+          message: "",
+          familyMembers: "",
+          children: "",
+        },
+        paymentStatus: false,
+      };
+      setFormData(newFormData);
+      reset(newFormData);
+    }
+  }, [listing, user, id, reset]);
+
+  if (status === "loading" || isPending || !formData) return <Loader />;
+  if (!session) return <div>You need to sign in</div>;
 
   const onSubmit = (data: any) => {
     console.log(data);
 
-    toast.success("Booking request submitted successfully!", {
-      position: "top-right",
-      autoClose: 2000,
+    axiosPublic.post("/booking-request/create-booking", data).then((data) => {
+      console.log(data.data.data);
+      if (data?.data?.data) {
+        Swal.fire({
+          title: "Good job!",
+          text: "Booking Request Successfull!",
+          icon: "success"
+        });
+      }
+
+      router.push("/dashboard/tenant/rental-request");
     });
 
-    reset(); // reset form
-
-    // Navigate after delay
-    setTimeout(() => {
-      router.push("/dashboard/tenant");
-    }, 2500);
-  };
-
-  const property = {
-    title: "Luxury Villa in Bashundhara",
-    address: "Road 5, Block C, Bashundhara R/A, Dhaka",
-    price: "৳90,000/mo",
-    image: "https://templates.hibootstrap.com/fela/default/assets/img/property/property-8.jpg",
+    reset();
   };
 
   return (
     <div className="md:w-7/8 mx-auto px-4 py-10 grid md:grid-cols-2 gap-10">
-
       {/* Booking Form */}
       <div className="bg-white p-8 rounded-2xl shadow-lg">
-        <h2 className="text-3xl font-bold mb-6 text-primary">Request a Booking</h2>
+        <h2 className="text-3xl font-bold mb-6 text-primary">
+          Request a Booking
+        </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* Static Info Display */}
           <div>
             <label className="text-sm text-gray-600">Full Name</label>
-            <div className="p-3 bg-gray-100 rounded text-gray-800">John Doe</div>
+            <div className="p-3 bg-gray-100 rounded text-gray-800">
+              {user?.name}
+            </div>
           </div>
           <div>
             <label className="text-sm text-gray-600">Phone Number</label>
-            <div className="p-3 bg-gray-100 rounded text-gray-800">017XXXXXXXX</div>
+            <div className="p-3 bg-gray-100 rounded text-gray-800">
+              {user?.phone}
+            </div>
           </div>
           <div>
             <label className="text-sm text-gray-600">Email</label>
-            <div className="p-3 bg-gray-100 rounded text-gray-800">johndoe@email.com</div>
+            <div className="p-3 bg-gray-100 rounded text-gray-800">
+              {user?.email}
+            </div>
           </div>
 
-          {/* Selects and Message */}
           <div>
             <label className="text-sm text-gray-600">Family Members</label>
-            <select {...register("familyMembers")} className="w-full p-3 bg-gray-50 rounded-lg focus:outline-none focus:ring focus:ring-secondary">
+            <select
+              {...register("details.familyMembers", {
+                required: "Family members is required",
+              })}
+              className="w-full p-3 bg-gray-50 rounded-lg focus:outline-none focus:ring focus:ring-secondary"
+            >
+              <option value="">Select family members</option>
               <option value="1">1 Member</option>
               <option value="2">2 Members</option>
               <option value="3">3 Members</option>
               <option value="4+">4+ Members</option>
             </select>
+            {(errors.details as any)?.familyMembers && (
+              <p className="text-red-500 text-sm mt-1">
+                {(errors.details as any).familyMembers.message}
+              </p>
+            )}
           </div>
+
           <div>
             <label className="text-sm text-gray-600">Children</label>
-            <select {...register("children")} className="w-full p-3 bg-gray-50 rounded-lg focus:outline-none focus:ring focus:ring-secondary">
+            <select
+              {...register("details.children", {
+                required: "Children field is required",
+              })}
+              className="w-full p-3 bg-gray-50 rounded-lg focus:outline-none focus:ring focus:ring-secondary"
+            >
+              <option value="">Select children</option>
               <option value="0">No Children</option>
               <option value="1">1 Child</option>
               <option value="2">2 Children</option>
               <option value="3+">3+ Children</option>
             </select>
+            {(errors.details as any)?.children && (
+              <p className="text-red-500 text-sm mt-1">
+                {(errors.details as any).children.message}
+              </p>
+            )}
           </div>
+
           <div>
-            <label className="text-sm text-gray-600">Message</label>
+            <label className="text-sm text-gray-600">Additional Message</label>
             <textarea
-              {...register("message")}
+              {...register("details.message")}
               className="w-full p-3 bg-gray-50 rounded-lg focus:outline-none focus:ring focus:ring-secondary"
               rows={4}
-              placeholder="Write your message..."
+              placeholder="Write a message to the landlord..."
             />
           </div>
 
-          <button type="submit" className="w-full">
-            <SecondaryButton customClass="">Submit Booking Request</SecondaryButton>
-          </button>
+          <SecondaryButton type="submit" className="w-full">
+            Submit Request
+          </SecondaryButton>
         </form>
       </div>
 
-      {/* Property Preview */}
-      <div className="rounded-2xl shadow-lg overflow-hidden bg-white">
-      <Image
-        src={property.image}
-        alt={property.title}
-        layout="responsive"
-        width={650}
-        height={550}
-        objectFit="cover"
-      />        <div className="p-6 space-y-2">
-          <h2 className="text-2xl font-semibold text-gray-800">{property.title}</h2>
-          <p className="text-gray-600">{property.address}</p>
-          <p className="text-lg text-primary font-bold">{property.price}</p>
-          <ToastContainer />
+      {/* Property Summary */}
+      <div className="bg-white p-8 rounded-2xl shadow-lg space-y-5">
+        <h3 className="text-2xl font-semibold text-primary mb-3">
+          Selected Property
+        </h3>
+        {listing?.images?.img1 && (
+          <Image
+            src={listing.images.img1}
+            alt="Property"
+            width={600}
+            height={400}
+            className="rounded-lg w-full h-64 object-cover"
+          />
+        )}
+        <div>
+          <p className="text-xl font-bold text-gray-800">{listing?.title}</p>
+          <p className="text-gray-500 text-sm">{listing?.address}</p>
+          <p className="text-xl text-primary font-semibold mt-2">
+            ৳ {listing?.price} / month
+          </p>
         </div>
       </div>
+
+      <ToastContainer />
     </div>
   );
 };

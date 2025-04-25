@@ -52,6 +52,8 @@ body {
   background: var(--sidebar-bg);
   color: var(--sidebar-foreground);
 }
+
+/* Slow spinning animation */
 .sidebar-button-theme {
   background: var(--sidebar-foreground);
   color: var(--sidebar-bg);
@@ -69,4 +71,18 @@ body {
 
 .animate-spin-slow {
   animation: spin-slow 2s linear infinite;
+}
+
+/* Snow bounce animation */
+@keyframes snowBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-40px); 
+  }
+}
+
+.snow-bounce {
+  animation: snowBounce 1.8s ease-in-out infinite; 
 }

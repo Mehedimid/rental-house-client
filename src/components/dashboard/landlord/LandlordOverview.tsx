@@ -74,6 +74,7 @@ const LandlordOverview = () => {
         );
 
         const landlordListings: any = response.data.data;
+        console.log(landlordListings);
 
         // Optional: Sort by landlord _id
         const sortedListings = landlordListings.sort((a:any, b:any) =>

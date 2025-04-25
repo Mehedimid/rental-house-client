@@ -114,7 +114,13 @@ const RequestBooking = ({ params }: any) => {
               <option value="1">1 Member</option>
               <option value="2">2 Members</option>
               <option value="3">3 Members</option>
-              <option value="4+">4+ Members</option>
+              <option value="4">4 Members</option>
+              <option value="5">5 Members</option>
+              <option value="6">6 Members</option>
+              <option value="7">7 Members</option>
+              <option value="8">8 Members</option>
+              <option value="9">9 Members</option>
+              <option value="10">10 Members</option>
             </select>
             {(errors.details as any)?.familyMembers && (
               <p className="text-red-500 text-sm mt-1">

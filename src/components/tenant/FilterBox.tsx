@@ -10,8 +10,8 @@ interface FilterSectionProps {
 const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
   const [keywords, setKeywords] = useState("");
   const [propertyType, setPropertyType] = useState("");
-  const [minPrice, setMinPrice] = useState<number | ''>('');
-  const [maxPrice, setMaxPrice] = useState<number | ''>('');
+  const [minPrice, setMinPrice] = useState<number | "">("");
+  const [maxPrice, setMaxPrice] = useState<number | "">("");
   const [sortBy, setSortBy] = useState("");
   const [beds, setBeds] = useState("");
   const [baths, setBaths] = useState("");
@@ -21,8 +21,8 @@ const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
 
     if (keywords) filters.searchTerm = keywords;
     if (propertyType) filters.type = propertyType;
-    if (minPrice !== '') filters.minPrice = minPrice;
-    if (maxPrice !== '') filters.maxPrice = maxPrice;
+    if (minPrice !== "") filters.minPrice = minPrice;
+    if (maxPrice !== "") filters.maxPrice = maxPrice;
 
     if (sortBy === "price-low-high") {
       filters.sortBy = "price";
@@ -82,7 +82,13 @@ const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
-            <option value="4">4+</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10+</option>
           </select>
         </div>
         <div className="w-full">
@@ -94,7 +100,14 @@ const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
             <option value="">Baths</option>
             <option value="1">1</option>
             <option value="2">2</option>
-            <option value="3">3+</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10+</option>
           </select>
         </div>
       </div>
@@ -107,9 +120,9 @@ const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
             className="bg-gray-50 shadow rounded w-1/2 p-3 lg:p-4 text-gray-700 focus:outline-none focus:shadow-outline mr-2"
             placeholder="Min Price"
             name="minPrice"
-            value={minPrice ?? ''}
+            value={minPrice ?? ""}
             onChange={(e) =>
-              setMinPrice(e.target.value ? parseInt(e.target.value) : '')
+              setMinPrice(e.target.value ? parseInt(e.target.value) : "")
             }
           />
           <span className="mx-2">-</span>
@@ -118,9 +131,9 @@ const FilterBox: React.FC<FilterSectionProps> = ({ onFilterChange }) => {
             className="bg-gray-50 shadow rounded w-1/2 p-3 lg:p-4 text-gray-700 focus:outline-none focus:shadow-outline"
             placeholder="Max Price"
             name="maxPrice"
-            value={maxPrice ?? ''}
+            value={maxPrice ?? ""}
             onChange={(e) =>
-              setMaxPrice(e.target.value ? parseInt(e.target.value) : '')
+              setMaxPrice(e.target.value ? parseInt(e.target.value) : "")
             }
           />
         </div>

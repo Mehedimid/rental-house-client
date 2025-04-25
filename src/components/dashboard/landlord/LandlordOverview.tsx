@@ -6,15 +6,19 @@ import { useSession } from "next-auth/react";
 import Loader from "@/components/shared/Loader";
 import Image from "next/image";
 
+interface IPopulatedLandlord {
+  _id: string;
+  name?: string;
+  email?: string;
+  phone?: string;
+  role?: string;
+}
+
+type ILandlord = string | IPopulatedLandlord;
+
 interface IListing {
   _id: string;
-  landlord: {
-    _id: string;
-    name: string;
-    email: string;
-    phone: string;
-    role: string;
-  };
+  landlord: ILandlord;
   title: string;
   address: string;
   price: number;
@@ -39,12 +43,17 @@ interface IListing {
   flatPlan: string;
 }
 
+// Type guard to check if landlord is populated
+function isPopulatedLandlord(landlord: ILandlord): landlord is IPopulatedLandlord {
+  return typeof landlord === "object" && landlord !== null && "_id" in landlord;
+}
+
 const LandlordOverview = () => {
   const { data: session, status } = useSession();
   const [listings, setListings] = useState<IListing[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const LandlordId = session?.user.id;
+  const landlordId = session?.user.id;
   const token = session?.accessToken;
 
   useEffect(() => {
@@ -59,26 +68,34 @@ const LandlordOverview = () => {
             },
           }
         );
-        
-        // Filter listings by the current landlordId
-        const landlordListings = response.data.data.filter((listing: IListing) => listing.landlord._id === LandlordId);
 
-        // Sort listings by landlordId (though it's already filtered, it's good practice if multiple landlords are considered)
-        const sortedListings = landlordListings.sort((a: IListing, b: IListing) => 
-            a.landlord._id.localeCompare(b.landlord._id)
-          );
+        const allListings: IListing[] = response.data.data;
+
+        // Filter only listings owned by this landlord
+        const landlordListings = allListings.filter(
+          (listing) =>
+            isPopulatedLandlord(listing.landlord) &&
+            listing.landlord._id === landlordId
+        );
+
+        // Optional: Sort by landlord _id
+        const sortedListings = landlordListings.sort((a, b) =>
+          isPopulatedLandlord(a.landlord) && isPopulatedLandlord(b.landlord)
+            ? a.landlord._id.localeCompare(b.landlord._id)
+            : 0
+        );
 
         setListings(sortedListings);
         console.log(sortedListings);
       } catch (error) {
-        console.error("Error fetching tenant listings:", error);
+        console.error("Error fetching landlord listings:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    if (LandlordId && token) fetchListings();
-  }, [LandlordId, token]);
+    if (landlordId && token) fetchListings();
+  }, [landlordId, token]);
 
   if (status === "loading") return <div>Loading session...</div>;
   if (status === "unauthenticated") return <div>Please log in to view your dashboard.</div>;
@@ -87,7 +104,11 @@ const LandlordOverview = () => {
   const total = listings.length;
   const available = listings.filter((l) => l.status === "available").length;
   const rented = listings.filter((l) => l.status === "rented").length;
-  const recent = [...listings].sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()).slice(0, 3);
+  const recent = [...listings]
+    .sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+    .slice(0, 3);
 
   return (
     <div className="space-y-6 my-5">
@@ -113,18 +134,24 @@ const LandlordOverview = () => {
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {recent.map((l) => (
             <li key={l._id} className="bg-white p-4 rounded shadow">
-                <Image 
-                src={l.images.img1} 
-                alt={l.title} 
+              <Image
+                src={l.images.img1}
+                alt={l.title}
                 width={100}
                 height={50}
-                className="w-full h-40 object-cover mb-3" 
+                className="w-full h-40 object-cover mb-3"
               />
               <p className="text-black font-semibold">{l.title}</p>
               <p className="text-gray-600 text-sm mb-2">{l.address}</p>
-              <p className="text-black mb-1">Status: <strong>{l.status}</strong></p>
-              <p className="text-black mb-1">Price: <strong>${l.price}</strong></p>
-              <p className="text-black text-sm">Listed: {new Date(l.createdAt!).toLocaleDateString()}</p>
+              <p className="text-black mb-1">
+                Status: <strong>{l.status}</strong>
+              </p>
+              <p className="text-black mb-1">
+                Price: <strong>${l.price}</strong>
+              </p>
+              <p className="text-black text-sm">
+                Listed: {new Date(l.createdAt).toLocaleDateString()}
+              </p>
             </li>
           ))}
         </ul>

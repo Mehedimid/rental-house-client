@@ -30,8 +30,8 @@ function Testimonials() {
                 <Image
                   src={item.img}
                   alt={item.name}
-                  width={16}
-                  height={16}
+                  width={64}
+                  height={64}
                   className="w-16 h-16 mx-auto rounded-full mb-4 object-cover"
                 />
                 <p className="text-gray-700 dark:text-gray-300 mb-4">{item.quote}</p>

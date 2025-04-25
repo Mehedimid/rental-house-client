@@ -85,7 +85,7 @@ const ManageRentalListings = () => {
     const fetchListings = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/listings/`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/listings/landlord/${landlordId}`);
         setAllListings(response.data.data);
       } catch (err: unknown) {
         setError("Error fetching listings");
@@ -196,7 +196,7 @@ const ManageRentalListings = () => {
   if (loading) return <Loader />;
   if (error) return <div>{error}</div>;
   console.log("data", allListings)
-  const landlordListings = allListings.data.filter((listing:any) => listing.landlord?._id === landlordId);
+  const landlordListings = allListings
 
   return (
     <div>

@@ -154,6 +154,7 @@ const ManageUsers = () => {
                 <td className="text-white p-3 space-y-2">
                   <Button
                     variant="outline"
+                    className="bg-black"
                     onClick={() => handleToggleStatus(user._id, user.isActive)}
                   >
                     {user.isActive ? "Deactivate" : "Activate"}

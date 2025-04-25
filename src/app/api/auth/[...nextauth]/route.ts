@@ -12,6 +12,7 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials): Promise<User | null> {
+        console.log("📥 Received credentials:", credentials);
         try {
           const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
             email: credentials?.email,
@@ -30,9 +31,10 @@ const handler = NextAuth({
             } as User;
           }
         
-          
+          console.log("❌ No accessToken or user found in response");
           return null;
         } catch (error) {
+          console.error("❌ Login error in authorize():", error);
             if (axios.isAxiosError(error)) {
               console.error("Login error:", error.response?.data || error.message);
             } else if (error instanceof Error) {

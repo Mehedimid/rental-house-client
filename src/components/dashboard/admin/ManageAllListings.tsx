@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import SecondaryButton from "@/components/shared/SecondaryButton";
 import PrimaryButton from "@/components/shared/PrimaryButton";
+import Loader from "@/components/shared/Loader";
 
 // Cloudinary config
 const CLOUDINARY_UPLOAD_PRESET = "tahmid123";
@@ -53,25 +54,39 @@ interface IListing {
     createdAt?: string;
 }
 
-
 const ManageAllListings = () => {
     const { data: session } = useSession();
     const [listings, setListings] = useState<IListing[]>([]);
     const [selectedListing, setSelectedListing] = useState<IListing | null>(null);
     const [showModal, setShowModal] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [pageSize] = useState(10);
 
     const token = session?.accessToken;
 
-    const fetchListings = async () => {
+    const fetchListings = async (page: number) => {
         try {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/listings`, {
                 headers: { Authorization: `Bearer ${token}` },
+                params: { page, limit: pageSize }, // Include page and limit in the request
             });
-            setListings(res.data.data);
+
+            setListings(res.data.data.data);
+            setTotalPages(res.data.data.totalPages); 
         } catch (err) {
             console.error(err);
-        }
+            setError("Error fetching listings.");
+        }finally {
+            setIsLoading(false); 
+          }
+    };
+
+    const handlePageChange = (newPage: number) => {
+        if (newPage < 1 || newPage > totalPages) return; 
+        setCurrentPage(newPage);
     };
 
     const handleEdit = (listing: IListing) => {
@@ -87,7 +102,7 @@ const ManageAllListings = () => {
             await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/listings/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            fetchListings();
+            fetchListings(currentPage);
         } catch (err) {
             console.error("Failed to delete listing:", err);
         }
@@ -126,11 +141,11 @@ const ManageAllListings = () => {
             setError("Listing data is incomplete.");
             return;
         }
-    
+
         // Destructure selectedListing and exclude 'landlord' without assigning it to a variable
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { landlord, ...updatedListing } = selectedListing;
-    
+
         try {
             // Send the updated listing data (without the 'landlord' field) to the backend
             await axios.patch(
@@ -139,7 +154,7 @@ const ManageAllListings = () => {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setShowModal(false);
-            fetchListings();
+            fetchListings(currentPage);
         } catch (err) {
             if (axios.isAxiosError(err)) {
                 const errorMessage = err.response?.data?.message || "Something went wrong";
@@ -149,17 +164,17 @@ const ManageAllListings = () => {
             }
         }
     };
-    
+
 
     useEffect(() => {
-        if (token) fetchListings();
-    }, [token]);
+        if (token) fetchListings(currentPage);
+    }, [currentPage, token]); 
 
+    if (isLoading) return <Loader/>;
     if (error) return <div>{error}</div>;
 
     return (
         <div className="p-6">
-            {/* <h2 className="text-2xl font-bold mb-6">All Rental Listings</h2> */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {listings.map((listing) => (
                     <div key={listing._id} className="bg-white p-4 rounded shadow">
@@ -170,7 +185,7 @@ const ManageAllListings = () => {
                             alt={listing.title}
                             className="rounded mb-2 object-cover h-48 w-full"
                         />
-                        <h3 className="font-semibold text-lg">{listing.title}</h3>
+                        <h3 className="text-black font-semibold text-lg">{listing.title}</h3>
                         <p className="text-gray-600">{listing.address}</p>
                         <div className="flex gap-2 mt-4">
                             <PrimaryButton
@@ -188,6 +203,25 @@ const ManageAllListings = () => {
                         </div>
                     </div>
                 ))}
+            </div>
+
+            {/* Pagination Controls */}
+            <div className="flex justify-center gap-4 mt-6">
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    className="px-4 py-2 bg-gray-500 text-white rounded"
+                    disabled={currentPage === 1}
+                >
+                    Previous
+                </button>
+                <span className="px-4 py-2 text-lg">{`Page ${currentPage} of ${totalPages}`}</span>
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    className="px-4 py-2 bg-gray-500 text-white rounded"
+                    disabled={currentPage === totalPages}
+                >
+                    Next
+                </button>
             </div>
 
             {showModal && selectedListing && (
@@ -312,13 +346,13 @@ const ManageAllListings = () => {
                         <div className="mt-6 flex justify-end space-x-4">
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="bg-red-500 text-white px-4 py-2 rounded"
+                                className="text-gray-500 px-4 py-2 rounded"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={handleSave}
-                                className="bg-green-600 text-white px-4 py-2 rounded"
+                                className="bg-blue-600 text-white px-4 py-2 rounded"
                             >
                                 Save
                             </button>

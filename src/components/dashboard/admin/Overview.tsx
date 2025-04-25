@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Loader from "@/components/shared/Loader";
 
 interface IUser {
     _id: string;
@@ -30,40 +31,73 @@ const Overview = () => {
     const [totalLandlords, setTotalLandlords] = useState(0);
     const [totalListings, setTotalListings] = useState(0);
     const [totalBookings, setTotalBookings] = useState(0);
+    const [loading, setLoading] = useState(true);
     const [newestListings, setNewestListings] = useState<IListing[]>([]);
     const token = session?.accessToken;
 
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
+                // Fetch users and bookings
                 const usersRes = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/all`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                const listingsRes = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/listings/`);
                 const bookingsRes = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/booking-request/`);
 
+                
+                let listings: IListing[] = [];
+                let page = 1;
+                const totalPages = 2; 
+                
+                while (page <= totalPages) {
+                    const listingsRes = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/listings?page=${page}`);
+                    const listingsData = listingsRes.data.data;
+
+                    console.log(`Page ${page} Listings Data:`, listingsData);
+
+                    // Check if the listingsData is an array before processing
+                    if (Array.isArray(listingsData.data)) {
+                        listings = [...listings, ...listingsData.data];
+                    } else {
+                        console.error("Listings data is not an array:", listingsData);
+                    }
+                    page++;
+                }
+
+                // Parse the fetched data
                 const users = usersRes.data.data as IUser[];
-                const listings = listingsRes.data.data as IListing[];
 
-                console.log("user", users)
+                console.log("Users:", users);
+                console.log("Listings:", listings);
 
-                setTotalTenants(users.filter(u => u.role === "tenant").length);
-                setTotalLandlords(users.filter(u => u.role === "landlord").length);
-                setTotalListings(listings.length);
-                setTotalBookings(bookingsRes.data.data.length);
-                setNewestListings(listings.slice(-3).reverse()); // Assuming listings are sorted oldest -> newest
+                // Handle scenario where listings is not an array or is empty
+                if (Array.isArray(listings) && listings.length > 0) {
+                    // Set total values for tenants, landlords, listings, and bookings
+                    setTotalTenants(users.filter(u => u.role === "tenant").length);
+                    setTotalLandlords(users.filter(u => u.role === "landlord").length);
+                    setTotalListings(listings.length);
+                    setTotalBookings(bookingsRes.data.data.length);
+
+                    // Set the 3 most recent listings (or fewer if not available)
+                    setNewestListings(listings.slice(-3).reverse());
+                } else {
+                    console.error("Listings data is empty or not in expected format.");
+                    setNewestListings([]);  
+                }
             } catch (error) {
                 console.error("Failed to fetch dashboard data:", error);
+            }finally {
+                setLoading(false); 
             }
         };
 
         fetchDashboardData();
     }, [token]);
-    if (status === "loading") return <div>Loading session...</div>;
-    if (status === "unauthenticated") return <div>Please log in to see your bookings.</div>;
 
+    if (loading || status === "loading") return <Loader/>;
+    if (status === "unauthenticated") return <div>Please log in to see your bookings.</div>;
 
     return (
         <div className="space-y-6">
@@ -114,7 +148,6 @@ const Overview = () => {
                     ))}
                 </ul>
             </div>
-
         </div>
     );
 };

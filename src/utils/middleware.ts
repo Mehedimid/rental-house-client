@@ -9,7 +9,6 @@ const protectedRoutes = {
   '/dashboard/landlord': 'landlord',
   '/listing/:id/requestBooking': 'tenant',
   '/dashboard/landlord/add-listing': 'landlord',
-  '/^\/listing\/[^/]+\/requestBooking/':'tenant' ,
 } as const;
 
 export async function middleware(req: NextRequest) {

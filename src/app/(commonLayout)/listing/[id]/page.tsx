@@ -201,6 +201,12 @@ const PropertyDetails = ({ params }: any) => {
           </div>
         </div>
       </div>
+
+      {/* Floor Plan */}
+      <div className="mb-10">
+        <h3 className="text-2xl lg:text-3xl font-semibold mb-4">Floor Plans</h3>
+        <Image src={property?.flatPlan} width={300} height={300} alt="Floor Plan" className="" />
+      </div>
     </div>
   );
 };

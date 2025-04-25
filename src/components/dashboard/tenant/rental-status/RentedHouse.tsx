@@ -152,13 +152,13 @@ const RentedHouse = () => {
           <tbody>
             {filteredBookings.map((item) => (
               <tr key={item._id} className="border">
-                <td className="border border-gray-200 p-3 ">
+                <td className="border text-black border-gray-200 p-3 ">
                   {item.listing.title}
                 </td>
-                <td className="border border-gray-200 p-3  capitalize">
+                <td className="border text-black border-gray-200 p-3  capitalize">
                   {item.bookingStatus}
                 </td>
-                <td className="border border-gray-200 p-3  capitalize">
+                <td className="border text-black border-gray-200 p-3  capitalize">
                   {item.paymentStatus == true ? "Paid" : "Not Paid"}
                 </td>
                 <td className="border border-gray-200 p-3  text-center">
@@ -173,13 +173,12 @@ const RentedHouse = () => {
                   ) : item.paymentStatus ? (
                     <span>Paid</span>
                   ) : (
-                    <Button
-                      variant="outline"
+                    <PrimaryButton
                       className="rounded-full text-white"
                       onClick={() => handleViewDetails(item.listing._id)}
                     >
                       View Details
-                    </Button>
+                    </PrimaryButton>
                   )}
                 </td>
               </tr>

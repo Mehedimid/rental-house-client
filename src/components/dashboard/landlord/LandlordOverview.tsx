@@ -59,24 +59,19 @@ const LandlordOverview = () => {
             },
           }
         );
+        
+        // Filter listings by the current landlordId
+        const landlordListings = response.data.data.filter((listing: IListing) => listing.landlord._id === LandlordId);
 
-        const listingsData: IListing[] =
-          Array.isArray(response.data.data)
-            ? response.data.data
-            : response.data.data?.listings || [];
-
-        const landlordListings = listingsData.filter(
-          (listing: IListing) => listing.landlord._id === LandlordId
-        );
-
-        const sortedListings = landlordListings.sort((a: IListing, b: IListing) =>
-          a.landlord._id.localeCompare(b.landlord._id)
-        );
+        // Sort listings by landlordId (though it's already filtered, it's good practice if multiple landlords are considered)
+        const sortedListings = landlordListings.sort((a: IListing, b: IListing) => 
+            a.landlord._id.localeCompare(b.landlord._id)
+          );
 
         setListings(sortedListings);
         console.log(sortedListings);
       } catch (error) {
-        console.error("Error fetching landlord listings:", error);
+        console.error("Error fetching tenant listings:", error);
       } finally {
         setLoading(false);
       }
@@ -92,9 +87,7 @@ const LandlordOverview = () => {
   const total = listings.length;
   const available = listings.filter((l) => l.status === "available").length;
   const rented = listings.filter((l) => l.status === "rented").length;
-  const recent = [...listings]
-    .sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime())
-    .slice(0, 3);
+  const recent = [...listings].sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()).slice(0, 3);
 
   return (
     <div className="space-y-6 my-5">
@@ -120,24 +113,18 @@ const LandlordOverview = () => {
         <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {recent.map((l) => (
             <li key={l._id} className="bg-white p-4 rounded shadow">
-              <Image
-                src={l.images.img1}
-                alt={l.title}
+                <Image 
+                src={l.images.img1} 
+                alt={l.title} 
                 width={100}
                 height={50}
-                className="w-full h-40 object-cover mb-3"
+                className="w-full h-40 object-cover mb-3" 
               />
               <p className="text-black font-semibold">{l.title}</p>
               <p className="text-gray-600 text-sm mb-2">{l.address}</p>
-              <p className="text-black mb-1">
-                Status: <strong>{l.status}</strong>
-              </p>
-              <p className="text-black mb-1">
-                Price: <strong>${l.price}</strong>
-              </p>
-              <p className="text-black text-sm">
-                Listed: {new Date(l.createdAt!).toLocaleDateString()}
-              </p>
+              <p className="text-black mb-1">Status: <strong>{l.status}</strong></p>
+              <p className="text-black mb-1">Price: <strong>${l.price}</strong></p>
+              <p className="text-black text-sm">Listed: {new Date(l.createdAt!).toLocaleDateString()}</p>
             </li>
           ))}
         </ul>

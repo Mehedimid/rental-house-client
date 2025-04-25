@@ -28,7 +28,7 @@ function Faq() {
               </summary>
               <div className="px-6 pb-5 text-gray-600 text-base">
                 You can schedule a viewing directly through our website by
-                clicking "Request Visit" on the property page or by calling our
+                clicking Request Visit on the property page or by calling our
                 support line.
               </div>
             </details>

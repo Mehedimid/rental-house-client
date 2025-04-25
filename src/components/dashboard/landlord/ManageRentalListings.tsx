@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -69,7 +70,7 @@ interface IListing {
 
 const ManageRentalListings = () => {
   const { data: session, status } = useSession();
-  const [allListings, setAllListings] = useState<IListing[]>([]);
+  const [allListings, setAllListings] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [listingDetails, setListingDetails] = useState<IListing | null>(null);
@@ -195,7 +196,7 @@ const ManageRentalListings = () => {
   if (loading) return <Loader />;
   if (error) return <div>{error}</div>;
   console.log("data", allListings)
-  const landlordListings = allListings.filter((listing) => listing.landlord?._id === landlordId);
+  const landlordListings = allListings.data.filter((listing:any) => listing.landlord?._id === landlordId);
 
   return (
     <div>
@@ -212,7 +213,7 @@ const ManageRentalListings = () => {
             </tr>
           </thead>
           <tbody>
-            {landlordListings.map((listing) => (
+            {landlordListings.map((listing:any) => (
               <tr key={listing._id} className="border">
                 <td className="border border-gray-200 p-3 text-black">{listing.title}</td>
                 <td className="border border-gray-200 p-3 text-black">{listing.address}</td>

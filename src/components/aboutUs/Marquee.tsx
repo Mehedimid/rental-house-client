@@ -19,6 +19,8 @@ function logoMarquee() {
                 key={i}
                 src={`https://cdn-icons-png.flaticon.com/512/69/${id}.png`}
                 alt={`Icon ${i}`}
+                height={12}
+                width={34}
                 className="h-12 mx-10"
               />
             ))}

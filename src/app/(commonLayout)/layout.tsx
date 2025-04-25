@@ -1,5 +1,6 @@
 import Footer from "@/components/shared/Footer";
 import { Navbar } from "@/components/shared/Navbar";
+import ScrollToTopButton from "@/components/shared/ScrollToTopButton";
 
 
 const CommonLayout = ({
@@ -14,6 +15,7 @@ const CommonLayout = ({
       </div>
       <div>{children}</div>
       <Footer />
+      <ScrollToTopButton/>
     </div>
   );
 };

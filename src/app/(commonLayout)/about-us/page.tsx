@@ -4,6 +4,7 @@ import Testimonials from "@/components/aboutUs/Testimonials";
 import Marquee from "@/components/aboutUs/Marquee";
 import React, { useEffect } from "react";
 import Hero from "@/components/shared/Hero";
+import Image from "next/image";
 
 
 const AboutPage = () => {
@@ -39,17 +40,17 @@ const AboutPage = () => {
       {/* Horizontal Images */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
             alt="Modern rental apartment"
             className="w-full h-64 object-cover rounded-lg shadow dark:border dark:border-gray-700"
           />
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1570129477492-45c003edd2be"
             alt="Happy couple in rented home"
             className="w-full h-64 object-cover rounded-lg shadow dark:border dark:border-gray-700"
           />
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1560518883-ce09059eeffa"
             alt="Landlord meeting with tenant"
             className="w-full h-64 object-cover rounded-lg shadow dark:border dark:border-gray-700"

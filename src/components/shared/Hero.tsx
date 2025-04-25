@@ -1,10 +1,11 @@
+import Image from 'next/image'
 import React from 'react'
 
 function Hero({img, title}:{img:string, title:string}) {
   return (
    <div className="relative w-full h-[200px] md:h-[200px] lg:h-[300px]">
    {/* Background Image */}
-   <img
+   <Image
      src={img}
      alt="Terms Hero"
      className="w-full h-full object-cover absolute inset-0 z-0"

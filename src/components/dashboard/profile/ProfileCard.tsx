@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -8,6 +8,8 @@ import { useSession } from 'next-auth/react';
 import PrimaryButton from '@/components/shared/PrimaryButton';
 import SecondaryButton from '@/components/shared/SecondaryButton';
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
+
 
 interface ProfileData {
   name: string;
@@ -55,10 +57,7 @@ const ProfileCard = () => {
     fetchProfileData();
   }, [userEmail, token]);
 
-  if (status === 'loading') return <div>Loading session...</div>;
-  if (status === 'unauthenticated') return <div>Please log in to view your profile.</div>;
-  if (loading) return <Loader />;
-  if (error) return <div>{error}</div>;
+  
 
   // Handle Edit Profile and Change Password buttons
   const handleEditProfile = () => {
@@ -72,13 +71,20 @@ const ProfileCard = () => {
     router.push('/dashboard/profile/change-password');
   };
 
+  if (status === 'loading') return <div>Loading session...</div>;
+  if (status === 'unauthenticated') return <div>Please log in to view your profile.</div>;
+  if (loading) return <Loader />;
+  if (error) return <div>{error}</div>;
+
   return (
     <div className="p-6 mt-8 max-w-md mx-auto bg-white rounded-lg shadow-theme">
       {/* Image Section */}
       <div className="mb-4 flex justify-center">
-        <img 
-          src={profileData?.imageUrl || '/default-profile.png'} // Fallback to a default image if none is provided
+        <Image 
+          src={profileData?.imageUrl || '/default-profile.png'}
           alt="Profile Image"
+          width={32}
+          height={32}
           className="w-32 h-32 rounded-full object-cover"
         />
       </div>

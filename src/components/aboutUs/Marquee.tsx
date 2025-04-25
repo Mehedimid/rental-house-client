@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Marquee from "react-fast-marquee";
 
 function logoMarquee() {
@@ -14,10 +15,12 @@ function logoMarquee() {
             ])
             .flat()
             .map((id, i) => (
-              <img
+              <Image
                 key={i}
                 src={`https://cdn-icons-png.flaticon.com/512/69/${id}.png`}
                 alt={`Icon ${i}`}
+                height={12}
+                width={34}
                 className="h-12 mx-10"
               />
             ))}

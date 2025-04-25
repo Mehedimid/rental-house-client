@@ -195,6 +195,7 @@ export default function AddListingPage() {
 
   if (status === 'loading') return <Loader />;
   if (status === 'unauthenticated') return <div>Please log in to add a listing.</div>;
+  if (loading) return <Loader />;
   if (error) return <div className="text-red-600 text-center my-4">{error}</div>;
 
   return (
@@ -341,7 +342,7 @@ export default function AddListingPage() {
           disabled={loading}
           className="bg-green-600 text-white px-4 py-2 rounded disabled:opacity-50"
         >
-          {loading ? 'Uploading...' : 'Upload'}
+          Upload
         </button>
       </div>
     </div>

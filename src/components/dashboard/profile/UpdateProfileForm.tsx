@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import SecondaryButton from "@/components/shared/SecondaryButton";
 import Link from "next/link";
+import Loader from "@/components/shared/Loader";
 
 const UpdateProfileForm = () => {
   const { data: session, status } = useSession();
@@ -95,7 +96,7 @@ const UpdateProfileForm = () => {
     }
   };
 
-  if (status === "loading") return <div>Loading...</div>;
+  if (status === "loading") return <Loader/>;
   if (!session?.user) return <div>You need to log in</div>;
 
   return (

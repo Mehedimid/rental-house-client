@@ -5,6 +5,7 @@ import Link from "next/link";
 import SecondaryButton from "@/components/shared/SecondaryButton";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Loader from "../shared/Loader";
 
 const RegistrationForm = () => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const RegistrationForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("tenant");
+  const [isLoading, setIsLoading] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null); // Added image state
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,6 +26,8 @@ const RegistrationForm = () => {
       alert("Passwords do not match.");
       return;
     }
+
+    setIsLoading(true); 
 
     // Upload image and get the URL
     let imageUrl = "";
@@ -57,6 +61,8 @@ const RegistrationForm = () => {
       } else {
         alert("An unexpected error occurred!");
       }
+    }finally {
+      setIsLoading(false); // Stop loader in case of error (optional – won't run if `router.push` executes first)
     }
   };
 
@@ -83,6 +89,8 @@ const RegistrationForm = () => {
       return ""; // Return empty string if upload fails
     }
   };
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className="flex justify-center items-center min-h-screen p-6">

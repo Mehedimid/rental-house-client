@@ -176,7 +176,7 @@ const PropertyDetails = ({ params }: any) => {
       {/* Floor Plan */}
       <div className="mb-10">
         <h3 className="text-2xl lg:text-3xl font-semibold mb-4">Floor Plans</h3>
-        <img src={property?.flatPlan} alt="Floor Plan" className="" />
+        <Image src={property?.flatPlan} alt="Floor Plan" className="" />
       </div>
     </div>
   );

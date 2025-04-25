@@ -70,13 +70,14 @@ const LandlordOverview = () => {
         );
 
         const allListings: IListing[] = response.data.data;
-
+        console.log(allListings)
         // Filter only listings owned by this landlord
         const landlordListings = allListings.filter(
           (listing) =>
             isPopulatedLandlord(listing.landlord) &&
             listing.landlord._id === landlordId
         );
+
 
         // Optional: Sort by landlord _id
         const sortedListings = landlordListings.sort((a, b) =>

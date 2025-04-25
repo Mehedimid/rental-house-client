@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -8,6 +8,8 @@ import { useSession } from 'next-auth/react';
 import PrimaryButton from '@/components/shared/PrimaryButton';
 import SecondaryButton from '@/components/shared/SecondaryButton';
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
+
 
 interface ProfileData {
   name: string;
@@ -76,9 +78,11 @@ const ProfileCard = () => {
     <div className="p-6 mt-8 max-w-md mx-auto bg-white rounded-lg shadow-theme">
       {/* Image Section */}
       <div className="mb-4 flex justify-center">
-        <img 
-          src={profileData?.imageUrl || '/default-profile.png'} // Fallback to a default image if none is provided
+        <Image 
+          src={profileData?.imageUrl || '/default-profile.png'}
           alt="Profile Image"
+          width={32}
+          height={32}
           className="w-32 h-32 rounded-full object-cover"
         />
       </div>

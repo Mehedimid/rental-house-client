@@ -1,3 +1,4 @@
+import Image from "next/image"
 
 function Testimonials() {
   return (
@@ -26,7 +27,7 @@ function Testimonials() {
               },
             ].map((item, idx) => (
               <div key={idx} className="bg-white dark:bg-gray-800 p-6 shadow rounded text-center">
-                <img
+                <Image
                   src={item.img}
                   alt={item.name}
                   className="w-16 h-16 mx-auto rounded-full mb-4 object-cover"

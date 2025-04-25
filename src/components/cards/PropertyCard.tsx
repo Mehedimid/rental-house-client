@@ -80,7 +80,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           <FaMapMarkerAlt className="inline-block mr-1" /> {address}
         </p>
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xl font-bold text-primary">{price}</span>
+          <span className="text-xl font-bold text-primary">{price}/-</span>
         </div>
         <div className="flex items-center text-gray-500 text-sm">
           {beds !== undefined && (

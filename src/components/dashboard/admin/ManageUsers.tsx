@@ -106,75 +106,87 @@ const ManageUsers = () => {
   const admins = users.filter((u) => u.role === "admin");
 
   // Render tables
-  const renderTable = (title: string, data: IUser[]) => (
-    <div className="my-10">
-      <h2 className="text-xl font-bold mb-4">{title}</h2>
-      <div className="overflow-x-auto shadow border rounded-lg">
-        <table className="min-w-full text-sm bg-white">
-          <thead className="bg-gray-200 text-left">
-            <tr>
-              <th className="text-black p-3">Image</th>
-              <th className="text-black p-3">Name</th>
-              <th className="text-black p-3">Email</th>
-              <th className="text-black p-3">Phone</th>
-              <th className="text-black p-3">Status</th>
-              <th className="text-black p-3">Change Role</th>
-              <th className="text-black p-3">Actions</th>
+  // Updated renderTable function
+const renderTable = (title: string, data: IUser[], isAdminTable: boolean) => (
+  <div className="my-10">
+    <h2 className="text-xl font-bold mb-4">{title}</h2>
+    <div className="overflow-x-auto shadow border rounded-lg">
+      <table className="min-w-full text-sm bg-white">
+        <thead className="bg-gray-200 text-left">
+          <tr>
+            <th className="text-black p-3">Image</th>
+            <th className="text-black p-3">Name</th>
+            <th className="text-black p-3">Email</th>
+            <th className="text-black p-3">Phone</th>
+            <th className="text-black p-3">Status</th>
+            {/* Only render Action buttons for Tenants and Landlords */}
+            {!isAdminTable && (
+              <>
+                <th className="text-black p-3">Change Role</th>
+                <th className="text-black p-3">Actions</th>
+              </>
+            )}
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((user) => (
+            <tr key={user._id} className="border-b">
+              <td className="p-3">
+                <Image
+                  src={user.imageUrl || "/default-user.png"}
+                  alt={user.name}
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+              </td>
+              <td className="text-black p-3">{user.name}</td>
+              <td className="text-black p-3">{user.email}</td>
+              <td className="text-black p-3">{user.phone}</td>
+              <td className="text-black p-3">{user.isActive ? "Active" : "Inactive"}</td>
+              {/* Only show action buttons for Tenants and Landlords */}
+              {!isAdminTable && (
+                <>
+                  <td className="text-black p-3">
+                    <select
+                      className="border p-2 rounded"
+                      value={user.role}
+                      onChange={(e) =>
+                        handleChangeRole(user._id, e.target.value as "tenant" | "landlord" | "admin")
+                      }
+                    >
+                      <option value="tenant">Tenant</option>
+                      <option value="landlord">Landlord</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </td>
+                  <td className="text-white p-3 space-y-2">
+                    <Button
+                      variant="outline"
+                      className="bg-black"
+                      onClick={() => handleToggleStatus(user._id, user.isActive)}
+                    >
+                      {user.isActive ? "Deactivate" : "Activate"}
+                    </Button>
+                  </td>
+                </>
+              )}
             </tr>
-          </thead>
-          <tbody>
-            {data.map((user) => (
-              <tr key={user._id} className="border-b">
-                <td className="p-3">
-                  <Image
-                    src={user.imageUrl || "/default-user.png"}
-                    alt={user.name}
-                    width={40}
-                    height={40}
-                    className="rounded-full"
-                  />
-                </td>
-                <td className="text-black p-3">{user.name}</td>
-                <td className="text-black p-3">{user.email}</td>
-                <td className="text-black p-3">{user.phone}</td>
-                <td className="text-black p-3">{user.isActive ? "Active" : "Inactive"}</td>
-                <td className="text-black p-3">
-                  <select
-                    className="border p-2 rounded"
-                    value={user.role}
-                    onChange={(e) =>
-                      handleChangeRole(user._id, e.target.value as "tenant" | "landlord" | "admin")
-                    }
-                  >
-                    <option value="tenant">Tenant</option>
-                    <option value="landlord">Landlord</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </td>
-                <td className="text-white p-3 space-y-2">
-                  <Button
-                    variant="outline"
-                    className="bg-black"
-                    onClick={() => handleToggleStatus(user._id, user.isActive)}
-                  >
-                    {user.isActive ? "Deactivate" : "Activate"}
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
-  );
+  </div>
+);
 
-  return (
-    <div>
-      {renderTable("Admins", admins)}
-      {renderTable("Tenants", tenants)}
-      {renderTable("Landlords", landlords)}
-    </div>
-  );
+
+return (
+  <div>
+    {renderTable("Admins", admins, true)}  
+    {renderTable("Tenants", tenants, false)}  
+    {renderTable("Landlords", landlords, false)}  
+  </div>
+);
 };
 
 export default ManageUsers;

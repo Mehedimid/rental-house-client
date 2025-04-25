@@ -10,62 +10,18 @@ import Loader from "@/components/shared/Loader";
 const UpdateProfileForm = () => {
   const { data: session, status } = useSession();
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [role, setRole] = useState("tenant");
-  const [imageFile, setImageFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (session?.user) {
       setName(session.user.name || "");
-      setEmail(session.user.email || "");
-      setPhone(session.user.phone || "");
-      setRole(session.user.role || "tenant");
     }
   }, [session]);
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setImageFile(e.target.files[0]);
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    let imageUrl = session?.user?.imageUrl || "";
-
-    // 1. Upload image to Cloudinary if new image selected
-    if (imageFile) {
-      const cloudinaryData = new FormData();
-      cloudinaryData.append("file", imageFile);
-      cloudinaryData.append("upload_preset", "tahmid123");
-      cloudinaryData.append("cloud_name", "dfvvoq4ud");
-
-      try {
-        const cloudinaryRes = await fetch(
-          "https://api.cloudinary.com/v1_1/dfvvoq4ud/image/upload",
-          {
-            method: "POST",
-            body: cloudinaryData,
-          }
-        );
-        const cloudinaryResult = await cloudinaryRes.json();
-        imageUrl = cloudinaryResult.secure_url;
-      } catch (err) {
-        console.error("Cloudinary upload failed:", err);
-        alert("Image upload failed");
-        return;
-      }
-    }
-
-    // 2. Send update payload to backend
     const payload = {
       name,
-      email,
-      phone,
-      role,
-      imageUrl,
     };
 
     try {
@@ -96,7 +52,7 @@ const UpdateProfileForm = () => {
     }
   };
 
-  if (status === "loading") return <Loader/>;
+  if (status === "loading") return <Loader />;
   if (!session?.user) return <div>You need to log in</div>;
 
   return (
@@ -116,64 +72,6 @@ const UpdateProfileForm = () => {
             onChange={(e) => setName(e.target.value)}
             className="border border-gray-300 focus:border-secondary outline-none p-3 w-full text-sm placeholder-secondary"
           />
-
-          <input
-            type="email"
-            placeholder="Email Address"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="border border-gray-300 focus:border-secondary outline-none p-3 w-full text-sm placeholder-secondary"
-          />
-
-          <input
-            type="tel"
-            placeholder="Phone Number"
-            pattern="[0-9]{11,}"
-            required
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="border border-gray-300 focus:border-secondary outline-none p-3 w-full text-sm placeholder-secondary"
-          />
-
-          <div className="relative">
-            <input
-              id="image"
-              type="file"
-              onChange={handleImageChange}
-              accept="image/*"
-              className="hidden"
-            />
-            <label
-              htmlFor="image"
-              className="border border-gray-300 focus:border-secondary outline-none p-3 w-full text-sm text-secondary cursor-pointer flex justify-start"
-            >
-              {imageFile ? imageFile.name : "Choose Image"}
-            </label>
-          </div>
-
-          <div className="flex items-center gap-4 text-secondary">
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="role"
-                value="tenant"
-                checked={role === "tenant"}
-                onChange={() => setRole("tenant")}
-              />
-              Tenant
-            </label>
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="role"
-                value="landlord"
-                checked={role === "landlord"}
-                onChange={() => setRole("landlord")}
-              />
-              Landlord
-            </label>
-          </div>
 
           <SecondaryButton
             type="submit"

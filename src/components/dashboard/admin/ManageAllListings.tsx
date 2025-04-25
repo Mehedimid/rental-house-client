@@ -50,7 +50,7 @@ interface IListing {
     images: IListingImages;
     propertyFeatures: string[];
     details: IListingDetails;
-    landlord: ILandlord;  // Add landlord field here
+    landlord: ILandlord;  
     createdAt?: string;
 }
 
@@ -71,11 +71,11 @@ const ManageAllListings = () => {
         try {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/listings`, {
                 headers: { Authorization: `Bearer ${token}` },
-                params: { page, limit: pageSize }, // Include page and limit in the request
+                params: { page, limit: pageSize }, 
             });
 
             setListings(res.data.data.data);
-            setTotalPages(res.data.data.totalPages); 
+            setTotalPages(res.data.data.totalPages);
         } catch (err) {
             console.error(err);
             setError("Error fetching listings.");

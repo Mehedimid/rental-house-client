@@ -160,15 +160,8 @@ export default function AddListingPage() {
           },
         }
       );
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        const errorMessage = err.response?.data?.message || "Something went wrong";
-        setError(errorMessage);
-      } else {
-        setError("An unexpected error occurred.");
-      }
-    }finally {
-        alert('Successfully created new Listing')
+
+      alert('Successfully created new Listing')
         setFormData({
             title: '',
             address: '',
@@ -189,6 +182,17 @@ export default function AddListingPage() {
             images: { ...initialImages },
           });
           setHasGarage(false);
+
+          
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const errorMessage = err.response?.data?.message || "Something went wrong";
+        setError(errorMessage);
+      } else {
+        setError("An unexpected error occurred.");
+      }
+    }finally {
+        
         setLoading(false);
     }
   };

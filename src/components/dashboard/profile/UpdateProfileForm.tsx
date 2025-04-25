@@ -11,6 +11,8 @@ const UpdateProfileForm = () => {
   const { data: session, status } = useSession();
   const [name, setName] = useState("");
 
+  const email = session?.user?.email
+
   useEffect(() => {
     if (session?.user) {
       setName(session.user.name || "");
@@ -22,6 +24,7 @@ const UpdateProfileForm = () => {
 
     const payload = {
       name,
+      email
     };
 
     try {

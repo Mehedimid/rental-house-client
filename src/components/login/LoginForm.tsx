@@ -6,15 +6,19 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import Loader from "../shared/Loader";
 
 const LoginForm = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setIsLoading(true);
     const result = await signIn("credentials", {
 
       email,
@@ -26,6 +30,7 @@ const LoginForm = () => {
 
     if (result?.error) {
       setError("Invalid email or password");
+      setIsLoading(false);
     } else {
       Swal.fire({
         position: "top-end",
@@ -34,10 +39,11 @@ const LoginForm = () => {
         showConfirmButton: false,
         timer: 1500
       });
-      router.push("/"); 
+      router.push("/");
     }
   };
 
+  if (isLoading) return <Loader />;
   return (
     <div className="flex justify-center items-center min-h-screen p-6">
       <div className="flex flex-col gap-6 w-full max-w-md p-8 border-2 border-white shadow-theme">

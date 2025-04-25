@@ -57,10 +57,7 @@ const ProfileCard = () => {
     fetchProfileData();
   }, [userEmail, token]);
 
-  if (status === 'loading') return <div>Loading session...</div>;
-  if (status === 'unauthenticated') return <div>Please log in to view your profile.</div>;
-  if (loading) return <Loader />;
-  if (error) return <div>{error}</div>;
+  
 
   // Handle Edit Profile and Change Password buttons
   const handleEditProfile = () => {
@@ -73,6 +70,11 @@ const ProfileCard = () => {
     console.log('Change password clicked');
     router.push('/dashboard/profile/change-password');
   };
+
+  if (status === 'loading') return <div>Loading session...</div>;
+  if (status === 'unauthenticated') return <div>Please log in to view your profile.</div>;
+  if (loading) return <Loader />;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="p-6 mt-8 max-w-md mx-auto bg-white rounded-lg shadow-theme">

@@ -73,7 +73,7 @@ const PropertyDetails = ({ params }: any) => {
             </p>
           </div>
           <p className="text-red-600 text-xl md:text-2xl font-semibold ">
-            {property?.price}
+            {property?.price} /-
           </p>
         </div>
 
@@ -114,17 +114,26 @@ const PropertyDetails = ({ params }: any) => {
             </div>
           </div>
 
-          <div></div>
+      {/* Floor Plan */}
+      <div className="mb-10">
+        <h3 className="text-2xl lg:text-3xl font-semibold mb-4">Floor Plans</h3>
+        <Image
+          src={property?.flatPlan}
+          alt="Floor Plan"
+          width={700}
+          height={500}
+        />
+      </div>
         </div>
 
         {/* ============right side ========= */}
-        <div>
+        <div className="md:w-2/6">
           {/* Property Details Grid */}
           <div className="mb-10">
             <h3 className="text-2xl lg:text-3xl font-semibold mb-4">
               Property Details
             </h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-gray-700">
+            <div className="flex flex-col md:flex-wrap gap-4 text-gray-700">
               <p>
                 <strong>Property phone:</strong> {property?.landlord.phone}
               </p>
@@ -170,13 +179,27 @@ const PropertyDetails = ({ params }: any) => {
               ))}
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Floor Plan */}
-      <div className="mb-10">
-        <h3 className="text-2xl lg:text-3xl font-semibold mb-4">Floor Plans</h3>
-        <Image src={property?.flatPlan} alt="Floor Plan" className="" />
+          {/* Landlord Info */}
+          <div className="mb-10">
+            <h3 className="text-2xl lg:text-3xl font-semibold mb-4">
+              Landlord Information
+            </h3>
+            <div className="flex items-center gap-4 text-gray-700">
+              <div>
+                <p>
+                  <strong>Name:</strong> {property?.landlord?.name}
+                </p>
+                <p>
+                  <strong>Email:</strong> {property?.landlord?.email}
+                </p>
+                <p>
+                  <strong>Phone:</strong> {property?.landlord?.phone}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

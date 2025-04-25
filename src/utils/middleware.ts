@@ -4,9 +4,12 @@ import type { NextRequest } from 'next/server'
 import { getToken } from 'next-auth/jwt'
 
 const protectedRoutes = {
-  // '/dashboard/admin': 'admin',
-  // '/dashboard/tenant': 'tenant',
-  // '/dashboard/landlord': 'landlord',
+  '/dashboard/admin': 'admin',
+  '/dashboard/tenant': 'tenant',
+  '/dashboard/landlord': 'landlord',
+  '/listing/:id/requestBooking': 'tenant',
+  '/dashboard/landlord/add-listing': 'landlord',
+  '/^\/listing\/[^/]+\/requestBooking/':'tenant' ,
 } as const;
 
 export async function middleware(req: NextRequest) {

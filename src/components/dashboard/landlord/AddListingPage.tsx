@@ -1,23 +1,24 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
-import axios from 'axios';
-import { useSession } from 'next-auth/react';
-import Loader from '@/components/shared/Loader';
+import { useState } from "react";
+import Image from "next/image";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import Loader from "@/components/shared/Loader";
+import Swal from "sweetalert2";
 
-const CLOUDINARY_UPLOAD_PRESET = 'tahmid123';
-const CLOUDINARY_CLOUD_NAME = 'dfvvoq4ud';
+const CLOUDINARY_UPLOAD_PRESET = "tahmid123";
+const CLOUDINARY_CLOUD_NAME = "dfvvoq4ud";
 
-type ListingType = 'apartment' | 'house' | 'villa' | 'townhouse';
-type StatusType = 'available' | 'not available';
+type ListingType = "apartment" | "house" | "villa" | "townhouse";
+type StatusType = "available" | "not available";
 
 interface IListingImages {
   img1: string;
-  img2: string;
-  img3: string;
-  img4: string;
-  img5: string;
+  img2?: string;
+  img3?: string;
+  img4?: string;
+  img5?: string;
 }
 
 interface IListingDetails {
@@ -43,36 +44,36 @@ interface FormDataType {
 }
 
 const initialImages: IListingImages = {
-  img1: '',
-  img2: '',
-  img3: '',
-  img4: '',
-  img5: '',
+  img1: "",
+  img2: "",
+  img3: "",
+  img4: "",
+  img5: "",
 };
 
 const toTitleCase = (str: string) =>
-  str.charAt(0).toUpperCase() + str.slice(1).replace(/([A-Z])/g, ' $1');
+  str.charAt(0).toUpperCase() + str.slice(1).replace(/([A-Z])/g, " $1");
 
 export default function AddListingPage() {
   const { data: session, status } = useSession();
   const [hasGarage, setHasGarage] = useState(false);
 
   const [formData, setFormData] = useState<FormDataType>({
-    title: '',
-    address: '',
+    title: "",
+    address: "",
     price: 0,
     sqft: 0,
     beds: 0,
     baths: 0,
-    flatPlan: '',
-    type: 'apartment',
-    status: 'available',
+    flatPlan: "",
+    type: "apartment",
+    status: "available",
     propertyFeatures: [],
     details: {
-      description: '',
+      description: "",
       rooms: 0,
       garage: hasGarage ? "Yes" : "No",
-      yearBuilt: '',
+      yearBuilt: "",
     },
     images: { ...initialImages },
   });
@@ -81,25 +82,35 @@ export default function AddListingPage() {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const target = e.target;
     const { name, value, type } = target;
 
-    const checked = type === 'checkbox' && 'checked' in target ? (target as HTMLInputElement).checked : false;
+    const checked =
+      type === "checkbox" && "checked" in target
+        ? (target as HTMLInputElement).checked
+        : false;
 
     if (name in formData.details) {
       setFormData((prev) => ({
         ...prev,
         details: {
           ...prev.details,
-          [name]: type === 'checkbox' ? checked : type === 'number' ? parseInt(value) : value,
+          [name]:
+            type === "checkbox"
+              ? checked
+              : type === "number"
+              ? parseInt(value)
+              : value,
         },
       }));
     } else {
       setFormData((prev) => ({
         ...prev,
-        [name]: ['price', 'sqft', 'beds', 'baths'].includes(name)
+        [name]: ["price", "sqft", "beds", "baths"].includes(name)
           ? parseInt(value)
           : value,
       }));
@@ -124,8 +135,8 @@ export default function AddListingPage() {
     if (!file) return;
 
     const form = new FormData();
-    form.append('file', file);
-    form.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    form.append("file", file);
+    form.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
 
     try {
       const response = await axios.post(
@@ -140,20 +151,18 @@ export default function AddListingPage() {
         images: { ...prev.images, [key]: imageUrl },
       }));
     } catch (error) {
-      console.error('Image upload failed', error);
+      console.error("Image upload failed", error);
     }
   };
-
-
 
   const handleCreate = async () => {
     try {
       const token = session?.accessToken;
       const landlordId = session?.user?.id || session?.user?.id;
-  
+
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/listings/create-listing`,
-        { ...formData, landlord: landlordId }, // ✅ Add landlord ID here
+        { ...formData, landlord: landlordId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -162,46 +171,65 @@ export default function AddListingPage() {
       );
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const errorMessage = err.response?.data?.message || "Something went wrong";
+        const errorMessage = "Try again and upload all 5 image";
+        console.log( err.response?.data?.message );
         setError(errorMessage);
       } else {
         setError("An unexpected error occurred.");
       }
-    }finally {
-        alert('Successfully created new Listing')
-        setFormData({
-            title: '',
-            address: '',
-            price: 0,
-            sqft: 0,
-            beds: 0,
-            baths: 0,
-            flatPlan: '',
-            type: 'apartment',
-            status: 'available',
-            propertyFeatures: [],
-            details: {
-              description: '',
-              rooms: 0,
-              garage: 'No',
-              yearBuilt: '',
-            },
-            images: { ...initialImages },
-          });
-          setHasGarage(false);
-        setLoading(false);
+    } finally {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "successfully added product",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setFormData({
+        title: "",
+        address: "",
+        price: 0,
+        sqft: 0,
+        beds: 0,
+        baths: 0,
+        flatPlan: "",
+        type: "apartment",
+        status: "available",
+        propertyFeatures: [],
+        details: {
+          description: "",
+          rooms: 0,
+          garage: "No",
+          yearBuilt: "",
+        },
+        images: { ...initialImages },
+      });
+      setHasGarage(false);
+      setLoading(false);
     }
   };
 
-  if (status === 'loading') return <Loader />;
-  if (status === 'unauthenticated') return <div>Please log in to add a listing.</div>;
+  if (status === "loading") return <Loader />;
+  if (status === "unauthenticated")
+    return <div>Please log in to add a listing.</div>;
   if (loading) return <Loader />;
-  if (error) return <div className="text-red-600 text-center my-4">{error}</div>;
+  if (error)
+    return <div className="text-red-600 text-center my-4">{error}</div>;
 
   return (
     <div className="bg-white p-6 mx-auto my-10 rounded w-full max-w-3xl">
       <div className="grid grid-cols-2 gap-4">
-        {(['title', 'address', 'price', 'sqft', 'beds', 'baths', 'flatPlan'] as const).map((field) => (
+        {(
+          [
+            "title",
+            "address",
+            "price",
+            "sqft",
+            "beds",
+            "baths",
+            "flatPlan",
+          ] as const
+        ).map((field) => (
           <div key={field} className="flex flex-col">
             <label htmlFor={field} className="text-black font-semibold mb-2">
               {toTitleCase(field)}
@@ -209,7 +237,11 @@ export default function AddListingPage() {
             <input
               id={field}
               name={field}
-              type={['price', 'sqft', 'beds', 'baths'].includes(field) ? 'number' : 'text'}
+              type={
+                ["price", "sqft", "beds", "baths"].includes(field)
+                  ? "number"
+                  : "text"
+              }
               min="0"
               value={formData[field]}
               onChange={handleChange}
@@ -218,9 +250,12 @@ export default function AddListingPage() {
           </div>
         ))}
 
-        {(['type', 'status'] as const).map((selectField) => (
+        {(["type", "status"] as const).map((selectField) => (
           <div key={selectField} className="flex flex-col">
-            <label htmlFor={selectField} className="text-black font-semibold mb-2">
+            <label
+              htmlFor={selectField}
+              className="text-black font-semibold mb-2"
+            >
               {toTitleCase(selectField)}
             </label>
             <select
@@ -230,9 +265,9 @@ export default function AddListingPage() {
               onChange={handleChange}
               className="border text-black px-3 py-2 rounded"
             >
-              {(selectField === 'type'
-                ? ['apartment', 'house', 'villa', 'townhouse']
-                : ['available', 'not available']
+              {(selectField === "type"
+                ? ["apartment", "house", "villa", "townhouse"]
+                : ["available", "not available"]
               ).map((option) => (
                 <option key={option} value={option}>
                   {toTitleCase(option)}
@@ -243,7 +278,9 @@ export default function AddListingPage() {
         ))}
 
         <div className="flex flex-col">
-          <label htmlFor="yearBuilt" className="text-black font-semibold mb-2">Year Built</label>
+          <label htmlFor="yearBuilt" className="text-black font-semibold mb-2">
+            Year Built
+          </label>
           <input
             id="yearBuilt"
             name="yearBuilt"
@@ -255,7 +292,9 @@ export default function AddListingPage() {
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="rooms" className="text-black font-semibold mb-2">Rooms</label>
+          <label htmlFor="rooms" className="text-black font-semibold mb-2">
+            Rooms
+          </label>
           <input
             id="rooms"
             name="rooms"
@@ -274,7 +313,9 @@ export default function AddListingPage() {
             name="garage"
             onChange={(e) => setHasGarage(e.target.checked)}
           />
-          <label htmlFor="garage" className="text-black">Garage</label>
+          <label htmlFor="garage" className="text-black">
+            Garage
+          </label>
         </div>
       </div>
 
@@ -293,7 +334,14 @@ export default function AddListingPage() {
 
       <div className="mt-4">
         <p className="text-black font-semibold mb-1">Property Features</p>
-        {['Balcony', 'Elevator', 'Swimming Pool', 'Gym', 'Garden', 'Parking'].map((feature) => (
+        {[
+          "Balcony",
+          "Elevator",
+          "Swimming Pool",
+          "Gym",
+          "Garden",
+          "Parking",
+        ].map((feature) => (
           <div key={feature} className="flex items-center space-x-2">
             <input
               type="checkbox"
@@ -302,39 +350,48 @@ export default function AddListingPage() {
               checked={formData.propertyFeatures.includes(feature)}
               onChange={handleFeatureChange}
             />
-            <label htmlFor={feature} className="text-black">{feature}</label>
+            <label htmlFor={feature} className="text-black">
+              {feature}
+            </label>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-  {Object.entries(formData.images).map(([key, url], index) => (
-    <div key={key} className="space-y-2 relative">
-      {url ? (
-        <Image src={url} alt={`Image ${index + 1}`} width={150} height={100} className="rounded" />
-      ) : (
-        <div className="w-full h-24 bg-gray-200 flex justify-center items-center rounded">
-          <span>No Image</span>
-        </div>
-      )}
-      <input
-        id={`image-${key}`}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        required
-        onChange={(e) => handleImageUpload(e, key as keyof IListingImages)}
-      />
-      <label
-        htmlFor={`image-${key}`}
-        className="border rounded-lg border-black outline-none p-3 w-full text-sm text-black cursor-pointer flex justify-start"
-      >
-        {url ? `Image ${index + 1}` : 'Upload Image'}
-      </label>
-    </div>
-  ))}
-</div>
-
+        {Object.entries(formData.images).map(([key, url], index) => (
+          <div key={key} className="space-y-2 relative">
+            {url ? (
+              <Image
+                src={url}
+                alt={`Image ${index + 1}`}
+                width={150}
+                height={100}
+                className="rounded"
+              />
+            ) : (
+              <div className="w-full h-24 bg-gray-200 flex justify-center items-center rounded">
+                <span>No Image</span>
+              </div>
+            )}
+            <input
+              id={`image-${key}`}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              required
+              onChange={(e) =>
+                handleImageUpload(e, key as keyof IListingImages)
+              }
+            />
+            <label
+              htmlFor={`image-${key}`}
+              className="border rounded-lg border-black outline-none p-3 w-full text-sm text-black cursor-pointer flex justify-start"
+            >
+              {url ? `Image ${index + 1}` : "Upload Image"}
+            </label>
+          </div>
+        ))}
+      </div>
 
       <div className="mt-6 flex justify-end">
         <button
